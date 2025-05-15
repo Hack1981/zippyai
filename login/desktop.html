@@ -1,0 +1,666 @@
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZIPPY - Login & Registro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Orbitron:wght@700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0a0a23, #1a1033);
+      color: #e0d7f5;
+    }
+    .font-robotic {
+      font-family: 'Orbitron', sans-serif;
+    }
+    /* Smooth and more animated sliding transition for panels */
+    .transition-transform {
+      transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    /* Scrollbar hidden for modal */
+    body.modal-open {
+      overflow: hidden;
+    }
+    /* Adjust input and button border radius for more rounded style */
+    input,
+    button {
+      border-radius: 1.5rem; /* 24px */
+    }
+    /* Adjust password toggle button position */
+    .password-toggle-btn {
+      top: 50%;
+      right: 1rem; /* 16px */
+      transform: translateY(-50%);
+      padding: 0.3rem 0.4rem;
+      border-radius: 9999px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #a78bfa; /* violet-400 */
+      transition: color 0.3s;
+      z-index: 10;
+    }
+    .password-toggle-btn:hover,
+    .password-toggle-btn:focus {
+      color: #7c3aed; /* violet-600 */
+      outline: none;
+    }
+    /* Custom scrollbar for inputs */
+    input::-webkit-input-placeholder {
+      color: #9ca3af;
+      opacity: 1;
+    }
+    input:-ms-input-placeholder {
+      color: #9ca3af;
+    }
+    input::placeholder {
+      color: #9ca3af;
+    }
+    /* Focus ring with subtle glow */
+    input:focus {
+      box-shadow: 0 0 12px 3px rgba(124, 58, 237, 0.7);
+      border-color: #7c3aed;
+      outline: none;
+    }
+    /* Panel shadows */
+    #leftPanel {
+      box-shadow: 0 10px 30px rgba(40, 30, 60, 0.9);
+      background-color: #120f1f; /* dark bg for login */
+    }
+    #rightPanel {
+      box-shadow: 0 10px 30px rgba(40, 30, 60, 0.9);
+      background-color: #120f1f; /* match leftPanel dark bg */
+    }
+    /* Description panel shadow */
+    #rightDescription {
+      box-shadow: inset 0 0 50px rgba(124, 58, 237, 0.3);
+      background: linear-gradient(135deg, #3b1a6d, #5c2ea6);
+    }
+    /* Buttons with gradient */
+    button[type="submit"] {
+      background: linear-gradient(90deg, #7c3aed, #5b21b6);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.8);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      color: white;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover:not(:disabled) {
+      background: linear-gradient(90deg, #5b21b6, #4c1d95);
+      box-shadow: 0 8px 25px rgba(76, 29, 149, 0.9);
+    }
+    button[type="submit"]:disabled {
+      background: #000000;
+      box-shadow: none;
+      cursor: not-allowed;
+      color: #555555;
+    }
+    /* Switch buttons */
+    #switchToCreate, #switchToLogin {
+      background: transparent;
+      border: 2px solid #a78bfa;
+      box-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      color: #a78bfa;
+      cursor: pointer;
+    }
+    #switchToCreate:hover, #switchToLogin:hover {
+      background-color: #a78bfa;
+      color: #1e1b2e;
+      border-color: #7c3aed;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.8);
+    }
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+      #container {
+        height: auto !important;
+        max-width: 100% !important;
+        border-radius: 1.5rem !important;
+      }
+      #leftPanel, #rightPanel, #rightDescription {
+        position: relative !important;
+        width: 100% !important;
+        transform: none !important;
+        border-radius: 1.5rem !important;
+        box-shadow: none !important;
+      }
+      #rightPanel {
+        margin-top: 2rem;
+      }
+      #rightDescription {
+        display: none !important;
+      }
+    }
+    /* Message container */
+    #messageContainer {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90vw;
+      z-index: 50;
+      pointer-events: none;
+    }
+    .message {
+      pointer-events: auto;
+      margin-bottom: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.7);
+      color: white;
+      opacity: 0.95;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideDownFade 0.4s ease forwards;
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+    }
+    .message-success {
+      background: #8b5cf6; /* violet-400 */
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.9);
+    }
+    .message-error {
+      background: #ec4899; /* pink-500 */
+      box-shadow: 0 4px 20px rgba(236, 72, 153, 0.9);
+    }
+    @keyframes slideDownFade {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 0.95;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-6 py-12">
+
+  <div
+    id="container"
+    class="relative w-full max-w-4xl h-[620px] rounded-3xl overflow-hidden flex flex-col md:flex-row bg-transparent shadow-lg"
+  >
+    <!-- Left Panel (Login Form) -->
+    <div
+      id="leftPanel"
+      class="absolute md:relative top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center items-center px-6 sm:px-12 transition-transform rounded-l-3xl"
+    >
+      <form
+        id="loginForm"
+        class="w-full max-w-md space-y-8"
+        autocomplete="off"
+        novalidate
+      >
+        <h3 class="text-3xl sm:text-4xl font-extrabold mb-6 text-center font-robotic tracking-wide text-violet-300 drop-shadow-lg">
+          Entrar
+        </h3>
+        <div>
+          <label
+            for="loginEmail"
+            class="block mb-2 sm:mb-3 text-sm font-semibold text-violet-300"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="loginEmail"
+            name="loginEmail"
+            required
+            placeholder="seu@email.com"
+            class="w-full rounded-3xl bg-[#120f1f] border border-violet-700 px-4 sm:px-5 py-3 sm:py-4 text-violet-100 placeholder-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-400 shadow-inner"
+          />
+        </div>
+        <div class="relative">
+          <label
+            for="loginPassword"
+            class="block mb-2 sm:mb-3 text-sm font-semibold text-violet-300"
+            >Senha</label
+          >
+          <input
+            type="password"
+            id="loginPassword"
+            name="loginPassword"
+            required
+            placeholder="••••••••"
+            minlength="8"
+            class="w-full rounded-3xl bg-[#120f1f] border border-violet-700 px-4 sm:px-5 py-3 sm:py-4 pr-14 sm:pr-16 text-violet-100 placeholder-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-400 shadow-inner"
+          />
+          <button
+            type="button"
+            id="toggleLoginPassword"
+            aria-label="Mostrar ou ocultar senha"
+            class="password-toggle-btn absolute"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <button
+          type="submit"
+          id="loginSubmit"
+          class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg disabled:cursor-not-allowed"
+          disabled
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
+
+    <!-- Right Panel (Create Account Form) -->
+    <div
+      id="rightPanel"
+      class="absolute md:relative top-0 right-0 w-full md:w-1/2 h-full flex flex-col justify-center items-center px-6 sm:px-12 transition-transform rounded-r-3xl"
+    >
+      <form
+        id="createForm"
+        class="w-full max-w-md space-y-8 hidden font-robotic"
+        autocomplete="off"
+        novalidate
+      >
+        <h3 class="text-3xl sm:text-4xl font-extrabold mb-6 text-center text-violet-300 tracking-wide drop-shadow-lg">
+          Criar Conta
+        </h3>
+        <div>
+          <label
+            for="createEmail"
+            class="block mb-2 sm:mb-3 text-sm font-semibold text-violet-300"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="createEmail"
+            name="createEmail"
+            required
+            placeholder="seu@email.com"
+            class="w-full rounded-3xl bg-[#120f1f] border border-violet-700 px-4 sm:px-5 py-3 sm:py-4 text-violet-100 placeholder-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-400 shadow-inner"
+          />
+        </div>
+        <div class="relative">
+          <label
+            for="createPassword"
+            class="block mb-2 sm:mb-3 text-sm font-semibold text-violet-300"
+            >Senha</label
+          >
+          <input
+            type="password"
+            id="createPassword"
+            name="createPassword"
+            required
+            placeholder="••••••••"
+            minlength="8"
+            class="w-full rounded-3xl bg-[#120f1f] border border-violet-700 px-4 sm:px-5 py-3 sm:py-4 pr-14 sm:pr-16 text-violet-100 placeholder-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500 focus:border-violet-400 shadow-inner"
+          />
+          <button
+            type="button"
+            id="toggleCreatePassword"
+            aria-label="Mostrar ou ocultar senha"
+            class="password-toggle-btn absolute"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <button
+          type="submit"
+          id="createSubmit"
+          class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg disabled:cursor-not-allowed"
+          disabled
+        >
+          Criar Conta
+        </button>
+      </form>
+    </div>
+
+    <!-- Right Description (for Login) -->
+    <div
+      id="rightDescription"
+      class="absolute top-0 right-0 w-full md:w-1/2 h-full flex flex-col justify-center items-center px-6 sm:px-12 text-center md:text-left transition-transform rounded-r-3xl"
+    >
+      <div id="descLogin" class="space-y-6 sm:space-y-8 max-w-md bg-gradient-to-tr from-[#4c1d95] via-[#6d3bb8] to-[#8e5fd9] rounded-3xl p-10 shadow-lg">
+        <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight font-robotic text-violet-200 drop-shadow-lg">
+          Bem-vindo de volta!
+        </h2>
+        <p class="text-violet-300 text-lg sm:text-xl leading-relaxed tracking-wide">
+          Entre na sua conta para acessar as funcionalidades avançadas de IA e
+          transformar suas ideias em realidade.
+        </p>
+        <button
+          id="switchToCreate"
+          class="mt-6 sm:mt-8 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-3xl border-2 border-violet-400 hover:border-violet-600 text-violet-400 hover:text-violet-600 font-semibold tracking-wide shadow-md transition"
+          aria-label="Mudar para criar conta"
+        >
+          Criar Conta <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div id="descCreate" class="hidden space-y-6 sm:space-y-8 max-w-md bg-gradient-to-tr from-[#4c1d95] via-[#6d3bb8] to-[#8e5fd9] rounded-3xl p-10 shadow-lg">
+        <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight font-robotic text-violet-200 drop-shadow-lg">
+          Junte-se a nós!
+        </h2>
+        <p class="text-violet-300 text-lg sm:text-xl leading-relaxed tracking-wide">
+          Crie sua conta com seu email e senha para começar a usar as ferramentas de IA que vão revolucionar seu trabalho e criatividade.
+        </p>
+        <button
+          id="switchToLogin"
+          class="mt-6 sm:mt-8 inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-3xl border-2 border-violet-400 hover:border-violet-600 text-violet-400 hover:text-violet-600 font-semibold tracking-wide shadow-md transition"
+          aria-label="Mudar para entrar"
+        >
+          Entrar <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message container -->
+  <div id="messageContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const baseUrl = "https://api-criar-conta.vercel.app/";
+
+    // Show message on site
+    function showMessage(message, type = "success", duration = 4000) {
+      const container = document.getElementById("messageContainer");
+      const msg = document.createElement("div");
+      msg.className = `message message-${type}`;
+      msg.setAttribute("role", type === "error" ? "alert" : "status");
+      msg.innerHTML = `
+        <i class="fas ${type === "error" ? "fa-times-circle" : "fa-check-circle"}"></i>
+        <span>${message}</span>
+      `;
+      container.appendChild(msg);
+      setTimeout(() => {
+        msg.style.opacity = "0";
+        msg.style.transform = "translateY(-20px)";
+        setTimeout(() => {
+          if (container.contains(msg)) {
+            container.removeChild(msg);
+          }
+        }, 400);
+      }, duration);
+    }
+
+    // Email validation regex (simple)
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // Criar conta
+    async function criarConta(email, password) {
+      try {
+        const response = await fetch(`${baseUrl}register/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          showMessage("Conta criada com sucesso!", "success");
+          if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+          }
+          return data;
+        } else {
+          showMessage("Erro ao criar conta: " + (data.detail || JSON.stringify(data)), "error");
+          return null;
+        }
+      } catch (error) {
+        showMessage("Erro inesperado ao criar conta.", "error");
+        return null;
+      }
+    }
+
+    // Login
+    async function fazerLogin(email, password) {
+      try {
+        const response = await fetch(`${baseUrl}login/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          showMessage("Login bem-sucedido!", "success");
+          if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+          }
+          redirectToZylo();
+          return data;
+        } else {
+          showMessage("Erro ao fazer login: " + (data.detail || JSON.stringify(data)), "error");
+          return null;
+        }
+      } catch (error) {
+        showMessage("Erro inesperado no login.", "error");
+        return null;
+      }
+    }
+
+    // Redirect function after successful login
+    function redirectToZylo() {
+      window.location.href = "../zylo.html";
+    }
+
+    const leftPanel = document.getElementById('leftPanel');
+    const rightPanel = document.getElementById('rightPanel');
+    const rightDescription = document.getElementById('rightDescription');
+
+    const descLogin = document.getElementById('descLogin');
+    const descCreate = document.getElementById('descCreate');
+
+    const loginForm = document.getElementById('loginForm');
+    const createForm = document.getElementById('createForm');
+
+    const switchToCreateBtn = document.getElementById('switchToCreate');
+    const switchToLoginBtn = document.getElementById('switchToLogin');
+
+    const toggleLoginPasswordBtn = document.getElementById('toggleLoginPassword');
+    const toggleCreatePasswordBtn = document.getElementById('toggleCreatePassword');
+
+    const loginSubmitBtn = document.getElementById('loginSubmit');
+    const createSubmitBtn = document.getElementById('createSubmit');
+
+    let isLogin = true;
+
+    // Clear all inputs in both forms
+    function clearAllInputs() {
+      loginForm.loginEmail.value = "";
+      loginForm.loginPassword.value = "";
+      if (loginForm.loginPassword.type === "text") {
+        loginForm.loginPassword.type = "password";
+        toggleLoginPasswordBtn.querySelector("i").classList.remove("fa-eye-slash");
+        toggleLoginPasswordBtn.querySelector("i").classList.add("fa-eye");
+      }
+      createForm.createEmail.value = "";
+      createForm.createPassword.value = "";
+      if (createForm.createPassword.type === "text") {
+        createForm.createPassword.type = "password";
+        toggleCreatePasswordBtn.querySelector("i").classList.remove("fa-eye-slash");
+        toggleCreatePasswordBtn.querySelector("i").classList.add("fa-eye");
+      }
+      loginSubmitBtn.disabled = true;
+      createSubmitBtn.disabled = true;
+    }
+
+    function switchToCreate() {
+      if (isLogin) {
+        clearAllInputs();
+
+        descLogin.classList.add('hidden');
+        descCreate.classList.remove('hidden');
+
+        loginForm.classList.add('hidden');
+        createForm.classList.remove('hidden');
+
+        leftPanel.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        rightPanel.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        rightDescription.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+        leftPanel.style.transform = 'translateX(-100%)';
+        rightPanel.style.transform = 'translateX(0)';
+        rightDescription.style.transform = 'translateX(-100%)';
+
+        isLogin = false;
+      }
+    }
+
+    function switchToLogin() {
+      if (!isLogin) {
+        clearAllInputs();
+
+        descCreate.classList.add('hidden');
+        descLogin.classList.remove('hidden');
+
+        createForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+
+        leftPanel.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        rightPanel.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        rightDescription.style.transition = 'transform 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+        leftPanel.style.transform = 'translateX(0)';
+        rightPanel.style.transform = 'translateX(100%)';
+        rightDescription.style.transform = 'translateX(0)';
+
+        isLogin = true;
+      }
+    }
+
+    switchToCreateBtn.addEventListener('click', switchToCreate);
+    switchToLoginBtn.addEventListener('click', switchToLogin);
+
+    // Password toggle function
+    function togglePasswordVisibility(inputId, button) {
+      const input = document.getElementById(inputId);
+      const icon = button.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    toggleLoginPasswordBtn.addEventListener('click', () => {
+      togglePasswordVisibility('loginPassword', toggleLoginPasswordBtn);
+    });
+
+    toggleCreatePasswordBtn.addEventListener('click', () => {
+      togglePasswordVisibility('createPassword', toggleCreatePasswordBtn);
+    });
+
+    // Validate email and password and enable/disable submit buttons with visual feedback
+    function validateLoginInputs() {
+      const email = loginForm.loginEmail.value.trim();
+      const password = loginForm.loginPassword.value;
+      const emailValid = isValidEmail(email);
+      const passwordValid = password.length >= 8;
+
+      loginSubmitBtn.disabled = !(emailValid && passwordValid);
+    }
+
+    function validateCreateInputs() {
+      const email = createForm.createEmail.value.trim();
+      const password = createForm.createPassword.value;
+      const emailValid = isValidEmail(email);
+      const passwordValid = password.length >= 8;
+
+      createSubmitBtn.disabled = !(emailValid && passwordValid);
+    }
+
+    loginForm.loginEmail.addEventListener('input', validateLoginInputs);
+    loginForm.loginPassword.addEventListener('input', validateLoginInputs);
+    createForm.createEmail.addEventListener('input', validateCreateInputs);
+    createForm.createPassword.addEventListener('input', validateCreateInputs);
+
+    // Form submit handlers with API calls and enhanced validation messages
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = loginForm.loginEmail.value.trim();
+      const password = loginForm.loginPassword.value.trim();
+
+      if (!email) {
+        showMessage("O campo de email é obrigatório.", "error");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        showMessage("Por favor, insira um email válido.", "error");
+        return;
+      }
+      if (!password) {
+        showMessage("O campo de senha é obrigatório.", "error");
+        return;
+      }
+      if (password.length < 8) {
+        showMessage("A senha deve ter pelo menos 8 caracteres.", "error");
+        return;
+      }
+      await fazerLogin(email, password);
+    });
+
+    createForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = createForm.createEmail.value.trim();
+      const password = createForm.createPassword.value.trim();
+
+      if (!email) {
+        showMessage("O campo de email é obrigatório.", "error");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        showMessage("Por favor, insira um email válido.", "error");
+        return;
+      }
+      if (!password) {
+        showMessage("O campo de senha é obrigatório.", "error");
+        return;
+      }
+      if (password.length < 8) {
+        showMessage("A senha deve ter pelo menos 8 caracteres.", "error");
+        return;
+      }
+      await criarConta(email, password);
+    });
+
+    // Reset transforms on window resize for desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        leftPanel.style.transition = 'none';
+        rightPanel.style.transition = 'none';
+        rightDescription.style.transition = 'none';
+
+        leftPanel.style.transform = 'translateX(0)';
+        rightPanel.style.transform = 'translateX(100%)';
+        rightDescription.style.transform = 'translateX(0)';
+        descCreate.classList.add('hidden');
+        descLogin.classList.remove('hidden');
+        createForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        isLogin = true;
+        clearAllInputs();
+      }
+    });
+
+    // Initialize right panel and description positions on load
+    window.addEventListener('load', () => {
+      rightPanel.style.transition = 'none';
+      rightDescription.style.transition = 'none';
+
+      rightPanel.style.transform = 'translateX(100%)';
+      rightDescription.style.transform = 'translateX(0)';
+      clearAllInputs();
+    });
+  </script>
+</body>
+</html>

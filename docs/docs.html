@@ -1,0 +1,174 @@
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Documentação da ZIPPY
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+ </head>
+ <body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200 font-sans min-h-screen flex flex-col">
+  <header class="bg-transparent border-b border-gray-300 dark:border-gray-700 p-6 flex items-center justify-between select-none">
+   <h1 class="text-2xl font-extrabold flex items-center gap-3 tracking-widest">
+    <i aria-hidden="true" class="fas fa-robot text-3xl">
+    </i>
+    ZIPPY
+   </h1>
+   <button aria-label="Voltar" class="text-teal-600 dark:text-teal-400 hover:underline font-semibold flex items-center gap-2" id="backBtn" type="button">
+    <i class="fas fa-arrow-left">
+    </i>
+    Voltar
+   </button>
+  </header>
+  <main class="flex-grow max-w-5xl mx-auto px-6 py-10 w-full">
+   <h2 class="text-4xl font-extrabold mb-6 text-center">
+    Documentação da ZIPPY
+   </h2>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Visão Geral
+    </h3>
+    <p class="mb-4 leading-relaxed">
+     A
+     <strong>
+      ZIPPY
+     </strong>
+     é uma interface simples e eficiente para interação com uma inteligência artificial, projetada para oferecer respostas rápidas e precisas.
+    </p>
+    <p class="mb-4 leading-relaxed">
+     Utilizando a API do Gemini, a ZIPPY integra funcionalidades avançadas, incluindo pesquisa na web em tempo real, garantindo que as respostas estejam sempre atualizadas e relevantes.
+    </p>
+    <p class="mb-4 leading-relaxed">
+     A interface é intuitiva, responsiva e acessível, facilitando a navegação e a comunicação fluida entre o usuário e a IA.
+    </p>
+   </section>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Funcionalidades Principais
+    </h3>
+    <ul class="list-disc list-inside space-y-3">
+     <li>
+      <strong>Pesquisa na Web em Tempo Real:</strong> Permite que a IA acesse informações atualizadas diretamente da internet para fornecer respostas mais precisas e relevantes.
+     </li>
+     <li>
+      <strong>Resposta Rápida:</strong> A ZIPPY processa e responde às mensagens com agilidade, proporcionando uma experiência fluida e eficiente.
+     </li>
+     <li>
+      <strong>Facilidade de Movimentos:</strong> A interface é projetada para ser simples e intuitiva, com navegação fácil e controles acessíveis, garantindo conforto no uso diário.
+     </li>
+     <li>
+      <strong>Compreensão Avançada:</strong> A IA entende o contexto das mensagens, permitindo conversas naturais e coerentes.
+     </li>
+     <li>
+      <strong>Alternância de Tema:</strong> O usuário pode escolher entre tema claro e escuro, com a preferência salva para futuras sessões.
+     </li>
+     <li>
+      <strong>Gerenciamento de Histórico:</strong> Histórico de conversas armazenado localmente, com opção de limpeza pelo usuário.
+     </li>
+     <li>
+      <strong>Notificações Intuitivas:</strong> Mensagens de alerta e confirmação são exibidas de forma clara e discreta.
+     </li>
+    </ul>
+   </section>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Estrutura da Página
+    </h3>
+    <ul class="list-disc list-inside space-y-2">
+     <li>
+      <strong>Cabeçalho:</strong> Exibe o nome da IA "ZIPPY" com ícone e botão para abrir configurações.
+     </li>
+     <li>
+      <strong>Área de Mensagens:</strong> Espaço principal para exibição das mensagens trocadas entre usuário e IA.
+     </li>
+     <li>
+      <strong>Formulário de Entrada:</strong> Campo para digitar mensagens, botão para ativar pesquisa na web e botão de envio.
+     </li>
+     <li>
+      <strong>Modal de Configurações:</strong> Permite limpar histórico, alternar tema e desconectar da conta.
+     </li>
+     <li>
+      <strong>Notificações:</strong> Área para exibir mensagens temporárias ao usuário.
+     </li>
+    </ul>
+   </section>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Como Usar
+    </h3>
+    <ol class="list-decimal list-inside space-y-3">
+     <li>
+      Faça login na aplicação.
+     </li>
+     <li>
+      Digite sua mensagem no campo inferior e envie pressionando
+      <kbd>
+       Enter
+      </kbd>
+      ou clicando no botão de envio.
+     </li>
+     <li>
+      Ative a pesquisa na web clicando no ícone do globo para obter respostas com dados atualizados.
+     </li>
+     <li>
+      Visualize as respostas da IA aparecerem com animação de digitação.
+     </li>
+     <li>
+      Acesse as configurações para limpar histórico, alternar tema ou desconectar.
+     </li>
+    </ol>
+   </section>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Acessibilidade e Usabilidade
+    </h3>
+    <ul class="list-disc list-inside space-y-2">
+     <li>
+      Uso de roles ARIA para descrever regiões e estados.
+     </li>
+     <li>
+      Labels e descrições para botões e campos de entrada.
+     </li>
+     <li>
+      Gerenciamento de foco ao abrir e fechar modais.
+     </li>
+     <li>
+      Suporte a navegação por teclado e atalhos (ex: Enter para enviar).
+     </li>
+     <li>
+      Contraste adequado para temas claro e escuro.
+     </li>
+    </ul>
+   </section>
+   <section class="mb-10">
+    <h3 class="text-2xl font-bold mb-3 border-b border-teal-500 pb-2">
+     Suporte
+    </h3>
+    <p class="leading-relaxed">
+     Para dúvidas, problemas ou sugestões, entre em contato com o suporte pelo email:
+    </p>
+    <a class="text-teal-600 dark:text-teal-400 font-semibold hover:underline" href="mailto:support@doshi.icu">
+     support@doshi.icu
+    </a>
+   </section>
+   <section class="mb-10 text-center text-sm text-gray-500 dark:text-gray-400">
+    <p>
+     Desenvolvido por Ângelo Silva
+    </p>
+    <p>
+     © 2025 Todos os direitos reservados.
+    </p>
+   </section>
+  </main>
+  <footer class="bg-gray-100 dark:bg-gray-800 text-center py-4 text-gray-600 dark:text-gray-400 select-none">
+  </footer>
+  <script>
+   document.getElementById('backBtn').addEventListener('click', () => {
+     window.location.replace('../index.html');
+   });
+  </script>
+ </body>
+</html>

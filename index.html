@@ -1,0 +1,189 @@
+<html lang="pt-BR" class="scroll-smooth">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Zippy AI - Inteligência Artificial
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1a202c; /* Tailwind's bg-gray-900 */
+      color: #e2e8f0; /* Tailwind's text-gray-300 */
+    }
+    /* Animations */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fadeInUp {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .fadeInUpDelay1 {
+      animation-delay: 0.2s;
+    }
+    .fadeInUpDelay2 {
+      animation-delay: 0.4s;
+    }
+    .fadeInUpDelay3 {
+      animation-delay: 0.6s;
+    }
+  </style>
+ </head>
+ <body id="body">
+  <header class="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md z-50 shadow-md">
+   <nav class="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between h-16">
+    <a class="text-2xl font-extrabold text-indigo-400 hover:text-indigo-500 transition-colors duration-300" href="#" id="home-link">
+     Zippy AI
+    </a>
+    <ul class="hidden md:flex space-x-8 font-semibold text-gray-300">
+     <li>
+      <a class="hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1" href="#" id="btn-zippy">
+       <i class="fas fa-robot">
+       </i>
+       Ir para Zippy
+      </a>
+     </li>
+     <li>
+      <a class="hover:text-indigo-400 transition-colors duration-300 flex items-center gap-1" href="docs/docs.html" rel="noopener" target="_blank">
+       <i class="fas fa-book">
+       </i>
+       Documentação
+      </a>
+     </li>
+    </ul>
+    <button aria-label="Abrir menu" class="md:hidden ml-4 p-2 rounded-md text-indigo-400 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400" id="btn-menu">
+     <i class="fas fa-bars">
+     </i>
+    </button>
+   </nav>
+   <div class="md:hidden bg-gray-900/95 backdrop-blur-md shadow-inner max-h-0 overflow-hidden transition-max-height duration-500" id="mobile-menu">
+    <ul class="flex flex-col space-y-4 px-6 py-4 font-semibold text-gray-300">
+     <li>
+      <a class="hover:text-indigo-400 transition-colors duration-300 flex items-center gap-2" href="#" id="btn-zippy-mobile">
+       <i class="fas fa-robot">
+       </i>
+       Ir para Zippy
+      </a>
+     </li>
+     <li>
+      <a class="hover:text-indigo-400 transition-colors duration-300 flex items-center gap-2" href="docs/docs.html" rel="noopener" target="_blank">
+       <i class="fas fa-book">
+       </i>
+       Documentação
+      </a>
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main class="pt-20 max-w-4xl mx-auto px-6 sm:px-10">
+   <section class="text-center mt-16 fadeInUp">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-400 mb-6 leading-tight">
+     Zippy AI - Modelo Avançado de Texto com Acesso à Web e Futuras Gerações de Vídeo e Imagens
+    </h1>
+    <p class="text-gray-300 max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed">
+     Zippy AI é um modelo de inteligência artificial focado em geração e compreensão de texto, com acesso em tempo real à internet para fornecer informações atualizadas. Futuramente, será capaz de gerar vídeos e imagens, ampliando as possibilidades criativas e funcionais para seus usuários.
+    </p>
+   </section>
+   <section class="mt-16 space-y-12 fadeInUp fadeInUpDelay1">
+    <article>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Acesso em Tempo Real à Web
+     </h2>
+     <p class="text-gray-300 leading-relaxed text-lg">
+      Diferente de modelos tradicionais, Zippy AI pode consultar a internet para obter dados atualizados, garantindo respostas precisas e relevantes para suas perguntas e tarefas.
+     </p>
+    </article>
+    <article>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Geração Avançada de Texto
+     </h2>
+     <p class="text-gray-300 leading-relaxed text-lg">
+      Crie conteúdos ricos e coerentes, desde artigos, resumos, roteiros até diálogos complexos, com fluidez e naturalidade impressionantes.
+     </p>
+    </article>
+    <article>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Futuras Capacidades de Geração de Vídeo
+     </h2>
+     <p class="text-gray-300 leading-relaxed text-lg">
+      Em breve, Zippy AI será capaz de gerar vídeos personalizados a partir de descrições textuais, abrindo novas fronteiras para criação de conteúdo multimídia automatizado.
+     </p>
+    </article>
+    <article>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Futuras Capacidades de Geração de Imagens
+     </h2>
+     <p class="text-gray-300 leading-relaxed text-lg">
+      A geração de imagens será integrada para permitir a criação de ilustrações, designs e arte digital diretamente a partir de comandos textuais, facilitando processos criativos.
+     </p>
+    </article>
+    <article>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Aplicações Práticas
+     </h2>
+     <p class="text-gray-300 leading-relaxed text-lg">
+      Zippy AI pode ser usado para atendimento ao cliente, criação de conteúdo, suporte educacional, automação de tarefas e muito mais, sempre com a vantagem do acesso à informação atualizada.
+     </p>
+    </article>
+   </section>
+  </main>
+  <footer class="mt-20 py-8 bg-gray-800 text-gray-400 text-center text-sm select-none">
+   © 2024 Zippy AI. Todos os direitos reservados.
+  </footer>
+  <script>
+   // Mobile menu toggle
+    const btnMenu = document.getElementById('btn-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    btnMenu.addEventListener('click', () => {
+      if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px') {
+        mobileMenu.style.maxHeight = '0px';
+      } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+      }
+    });
+
+    // Navigation to zylo.html on "Ir para Zippy" clicks
+    const btnZippy = document.getElementById('btn-zippy');
+    const btnZippyMobile = document.getElementById('btn-zippy-mobile');
+    const homeLink = document.getElementById('home-link');
+
+    function goToZylo() {
+      window.location.href = 'zylo.html';
+    }
+
+    btnZippy.addEventListener('click', (e) => {
+      e.preventDefault();
+      goToZylo();
+    });
+    btnZippyMobile.addEventListener('click', (e) => {
+      e.preventDefault();
+      goToZylo();
+      if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px') {
+        mobileMenu.style.maxHeight = '0px';
+      }
+    });
+    homeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px') {
+        mobileMenu.style.maxHeight = '0px';
+      }
+    });
+  </script>
+ </body>
+</html>
