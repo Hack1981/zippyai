@@ -13,8 +13,17 @@
     rel="stylesheet"
   />
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
     body {
       font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom, #120f23, #1a1429);
+      overflow: hidden;
     }
     /* Custom scrollbar for dark mode */
     ::-webkit-scrollbar {
@@ -74,10 +83,29 @@
     .password-toggle:hover {
       color: #c4b5fd;
     }
+    main {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      background-color: #2a1e4a;
+      border-radius: 0;
+      box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.7);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    @media (min-width: 640px) {
+      main {
+        border-radius: 1.5rem;
+        height: 100vh;
+        margin: 0 auto;
+      }
+    }
   </style>
 </head>
-<body class="bg-gradient-to-b from-[#120f23] to-[#1a1429] min-h-screen flex items-center justify-center p-4">
-  <main class="w-full max-w-md bg-[#2a1e4a] rounded-3xl shadow-2xl p-6 sm:p-8">
+<body class="p-0 m-0 flex items-center justify-center w-full h-full">
+  <main>
     <h1 class="text-center text-5xl font-extrabold text-purple-500 mb-8 select-none tracking-wide leading-none">
       ZIPPY
     </h1>
@@ -101,7 +129,7 @@
       </button>
     </div>
 
-    <section id="loginSection" class="tab-content block">
+    <section id="loginSection" class="tab-content block flex-grow overflow-auto">
       <form
         id="loginForm"
         class="space-y-6"
@@ -181,7 +209,7 @@
       </form>
     </section>
 
-    <section id="registerSection" class="tab-content hidden">
+    <section id="registerSection" class="tab-content hidden flex-grow overflow-auto">
       <form
         id="registerForm"
         class="space-y-6"
@@ -309,7 +337,11 @@
         showToast("Usuário registrado com sucesso!");
         console.log(data);
       } catch (error) {
-        showToast(error.message === "Dados errados." ? "Dados errados." : `Erro: ${error.message}`);
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
       }
     }
 
@@ -340,7 +372,11 @@
 
         redirectToZylo();
       } catch (error) {
-        showToast(error.message === "Dados errados." ? "Dados errados." : `Erro: ${error.message}`);
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
       }
     }
 
