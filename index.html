@@ -176,10 +176,10 @@
       <i class="fas fa-image"></i>
      </div>
      <h2 class="text-xl font-semibold text-indigo-400 mb-2">
-      Futuras Capacidades de Geração de Imagens
+      Capacidades de Geração de Imagens
      </h2>
      <p class="text-gray-300 flex-grow leading-relaxed text-base">
-      A geração de imagens será integrada para permitir a criação de ilustrações,
+      A geração de imagens está integrada para permitir a criação de ilustrações,
       designs e arte digital diretamente a partir de comandos textuais,
       facilitando processos criativos.
      </p>
@@ -261,6 +261,13 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
      mobileMenu.style.maxHeight = "0px";
+    }
+   });
+
+   // Check if user key exists in localStorage and redirect if so
+   document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("user")) {
+     window.location.href = "https://zippy1.netlify.app/chat";
     }
    });
   </script>
