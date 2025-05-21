@@ -1,3 +1,4 @@
+
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -1243,8 +1244,8 @@
 
     function parseMarkdown(text) {
       const escapeHtml = (str) =>
-        str.replace(/&(?![a-z]+;)/g, "&amp;")
-           .replace(/<(?!\/?sup>)/g, "&lt;")  // Deixa passar <sup> e </sup>
+        str.replace(/&/g, "&amp;")
+           .replace(/</g, "&lt;")
            .replace(/>/g, "&gt;")
            .replace(/"/g, "&quot;")
            .replace(/'/g, "&#39;");
@@ -1253,10 +1254,9 @@
 
       escapedText = escapedText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       escapedText = escapedText.replace(/\*(.+?)\*/g, '<em>$1</em>');
-      escapedText = escapedText.replace(/\n/g, '<br>');
+      escapedText = escapedText.replace(/\\n/g, '<br>');
 
       return escapedText;
-      
     }
 
     function addMessage(text, fromUser = false, save = true) {
