@@ -1,4 +1,3 @@
-
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -848,6 +847,25 @@
       color: #f0f9ff;
     }
   </style>
+
+  <!-- Configuração do MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a', 'button', 'input', 'select', 'textarea']
+      }
+    };
+  </script>
+
+  <!-- Script MathJax Offline -->
+  <script src="mathjax/es5/tex-svg.js"></script>
 </head>
 <body>
   <div id="chatContainer" role="main" aria-label="Chat ZIPPY Interface Simples">
@@ -1187,6 +1205,8 @@
         }
         // After loading messages, attach click handlers to images for preview
         attachImagePreviewHandlers();
+        // After messages are added, typeset math expressions
+        MathJax.typesetPromise().catch((err) => console.error("MathJax typeset error:", err));
         setTimeout(() => {
           chatMessages.scrollTop = chatMessages.scrollHeight;
         }, 50);
@@ -1284,6 +1304,12 @@
       }
       chatMessages.appendChild(messageWrapper);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // After adding message, typeset math expressions if bot message
+      if (!fromUser) {
+        MathJax.typesetPromise([messageWrapper]).catch((err) => console.error("MathJax typeset error:", err));
+      }
+
       if (save) saveMessagesToStorage();
     }
 
@@ -1299,6 +1325,12 @@
       }
       chatMessages.appendChild(messageWrapper);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // After adding message, typeset math expressions if bot message
+      if (!fromUser) {
+        MathJax.typesetPromise([messageWrapper]).catch((err) => console.error("MathJax typeset error:", err));
+      }
+
       if (save) saveMessagesToStorage();
     }
 
@@ -1313,6 +1345,9 @@
 
       chatMessages.appendChild(messageWrapper);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Typeset math expressions in the new message
+      await MathJax.typesetPromise([messageWrapper]).catch((err) => console.error("MathJax typeset error:", err));
 
       await saveMessagesToStorage();
 
