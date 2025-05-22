@@ -1,0 +1,510 @@
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZIPPY - Login & Registro</title>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/imagem/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png">
+  <link rel="manifest" href="/imagem/site.webmanifest">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(to bottom, #120f23, #1a1429);
+      overflow: hidden;
+    }
+    /* Custom scrollbar for dark mode */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1429;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #8b5cf6;
+      border-radius: 10px;
+    }
+    /* Toast container */
+    #toast {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4c1d95; /* deep purple */
+      color: #e0d7f5;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.6);
+      font-weight: 600;
+      font-size: 0.875rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 9999;
+      max-width: 90vw;
+      text-align: center;
+      user-select: none;
+      line-height: 1.2;
+    }
+    #toast.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* Hide default focus outline but keep accessibility */
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid #a78bfa;
+      outline-offset: 2px;
+    }
+    /* Password toggle button */
+    .password-toggle {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #8b5cf6;
+      font-size: 1.1rem;
+      user-select: none;
+      transition: color 0.2s ease-in-out;
+    }
+    .password-toggle:hover {
+      color: #c4b5fd;
+    }
+    main {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      background-color: #2a1e4a;
+      border-radius: 0;
+      box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.7);
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    @media (min-width: 640px) {
+      main {
+        border-radius: 1.5rem;
+        height: 100vh;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body class="p-0 m-0 flex items-center justify-center w-full h-full">
+  <main>
+    <h1 class="text-center text-5xl font-extrabold text-purple-500 mb-8 select-none tracking-wide leading-none">
+      ZIPPY
+    </h1>
+
+    <div class="flex justify-center mb-6">
+      <button
+        id="tabLogin"
+        class="tab-button text-purple-400 border-b-4 border-purple-500 font-semibold px-6 py-2 focus:outline-none transition-colors duration-300"
+        aria-selected="true"
+        type="button"
+      >
+        Login
+      </button>
+      <button
+        id="tabRegister"
+        class="tab-button text-purple-600 hover:text-purple-400 px-6 py-2 focus:outline-none transition-colors duration-300 border-b-4 border-transparent"
+        aria-selected="false"
+        type="button"
+      >
+        Registrar
+      </button>
+    </div>
+
+    <section id="loginSection" class="tab-content block flex-grow overflow-auto">
+      <form
+        id="loginForm"
+        class="space-y-6"
+        onsubmit="event.preventDefault();"
+        autocomplete="off"
+        spellcheck="false"
+      >
+        <div>
+          <label
+            for="loginEmail"
+            class="block mb-1 text-purple-300 font-medium text-sm"
+            >Email</label
+          >
+          <div class="relative">
+            <input
+              id="loginEmail"
+              type="email"
+              placeholder="seuemail@exemplo.com"
+              class="w-full rounded-lg bg-[#3a2a5a] border border-transparent focus:border-purple-500 focus:ring-2 focus:ring-purple-600 text-purple-100 placeholder-purple-400 px-4 py-3 pr-10 transition"
+              required
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+              inputmode="email"
+            />
+            <i
+              class="fas fa-envelope absolute right-3 top-3.5 text-purple-400 pointer-events-none"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="loginPassword"
+            class="block mb-1 text-purple-300 font-medium text-sm"
+            >Senha</label
+          >
+          <div class="relative">
+            <input
+              id="loginPassword"
+              type="password"
+              placeholder="Mínimo 8 caracteres"
+              class="w-full rounded-lg bg-[#3a2a5a] border border-transparent focus:border-purple-500 focus:ring-2 focus:ring-purple-600 text-purple-100 placeholder-purple-400 px-4 py-3 pr-10 transition"
+              required
+              minlength="8"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
+            <i
+              class="fas fa-lock absolute right-10 top-3.5 text-purple-400 pointer-events-none"
+              aria-hidden="true"
+            ></i>
+            <button
+              type="button"
+              id="toggleLoginPassword"
+              aria-label="Mostrar ou ocultar senha"
+              class="password-toggle"
+              tabindex="0"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button
+          id="loginButton"
+          type="submit"
+          disabled
+          class="w-full bg-purple-600 disabled:bg-purple-900 disabled:cursor-not-allowed hover:bg-purple-700 transition rounded-lg py-3 text-white font-semibold text-lg shadow-md"
+        >
+          Entrar
+        </button>
+      </form>
+    </section>
+
+    <section id="registerSection" class="tab-content hidden flex-grow overflow-auto">
+      <form
+        id="registerForm"
+        class="space-y-6"
+        onsubmit="event.preventDefault();"
+        autocomplete="off"
+        spellcheck="false"
+      >
+        <div>
+          <label
+            for="registerEmail"
+            class="block mb-1 text-purple-300 font-medium text-sm"
+            >Email</label
+          >
+          <div class="relative">
+            <input
+              id="registerEmail"
+              type="email"
+              placeholder="seuemail@exemplo.com"
+              class="w-full rounded-lg bg-[#3a2a5a] border border-transparent focus:border-purple-500 focus:ring-2 focus:ring-purple-600 text-purple-100 placeholder-purple-400 px-4 py-3 pr-10 transition"
+              required
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+              inputmode="email"
+            />
+            <i
+              class="fas fa-envelope absolute right-3 top-3.5 text-purple-400 pointer-events-none"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="registerPassword"
+            class="block mb-1 text-purple-300 font-medium text-sm"
+            >Senha</label
+          >
+          <div class="relative">
+            <input
+              id="registerPassword"
+              type="password"
+              placeholder="Mínimo 8 caracteres"
+              class="w-full rounded-lg bg-[#3a2a5a] border border-transparent focus:border-purple-500 focus:ring-2 focus:ring-purple-600 text-purple-100 placeholder-purple-400 px-4 py-3 pr-10 transition"
+              required
+              minlength="8"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
+            <i
+              class="fas fa-lock absolute right-10 top-3.5 text-purple-400 pointer-events-none"
+              aria-hidden="true"
+            ></i>
+            <button
+              type="button"
+              id="toggleRegisterPassword"
+              aria-label="Mostrar ou ocultar senha"
+              class="password-toggle"
+              tabindex="0"
+            >
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button
+          id="registerButton"
+          type="submit"
+          disabled
+          class="w-full bg-purple-600 disabled:bg-purple-900 disabled:cursor-not-allowed hover:bg-purple-700 transition rounded-lg py-3 text-white font-semibold text-lg shadow-md"
+        >
+          Registrar
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <script>
+    const baseURL =
+      "https://api-criar-conta-git-main-hack1981s-projects.vercel.app";
+
+    function isValidEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    function isValidPassword(password) {
+      return password.length >= 8;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    async function register(email, password) {
+      try {
+        const response = await fetch(`${baseURL}/register/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          if (data.detail && data.detail.toLowerCase().includes("already")) {
+            showToast("Email já registrado.");
+            return;
+          }
+          throw new Error(data.detail || "Dados errados.");
+        }
+
+        showToast("Usuário registrado com sucesso!");
+        console.log(data);
+      } catch (error) {
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
+      }
+    }
+
+    async function login(email, password) {
+      try {
+        const response = await fetch(`${baseURL}/login/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Dados errados.");
+        }
+
+        const userData = {
+          id: data.user.id,
+          email: data.user.email,
+        };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        showToast("Login realizado com sucesso!");
+        console.log("Usuário salvo no localStorage:", userData);
+
+        redirectToZylo();
+      } catch (error) {
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
+      }
+    }
+
+    // Redirect function after successful login
+    function redirectToZylo() {
+      window.location.href = "https://zippy.icu/chat";
+    }
+
+    function updateRegisterButton() {
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+      const button = document.getElementById("registerButton");
+
+      button.disabled = !(isValidEmail(email) && isValidPassword(password));
+    }
+
+    function updateLoginButton() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const button = document.getElementById("loginButton");
+
+      button.disabled = !(isValidEmail(email) && isValidPassword(password));
+    }
+
+    function clearLoginFields() {
+      document.getElementById("loginEmail").value = "";
+      document.getElementById("loginPassword").value = "";
+      updateLoginButton();
+    }
+    function clearRegisterFields() {
+      document.getElementById("registerEmail").value = "";
+      document.getElementById("registerPassword").value = "";
+      updateRegisterButton();
+    }
+
+    document
+      .getElementById("registerEmail")
+      .addEventListener("input", updateRegisterButton);
+    document
+      .getElementById("registerPassword")
+      .addEventListener("input", updateRegisterButton);
+
+    document
+      .getElementById("loginEmail")
+      .addEventListener("input", updateLoginButton);
+    document
+      .getElementById("loginPassword")
+      .addEventListener("input", updateLoginButton);
+
+    document
+      .getElementById("registerButton")
+      .addEventListener("click", () => {
+        const email = document.getElementById("registerEmail").value;
+        const password = document.getElementById("registerPassword").value;
+        register(email, password);
+      });
+
+    document.getElementById("loginButton").addEventListener("click", () => {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      login(email, password);
+    });
+
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegister = document.getElementById("tabRegister");
+    const loginSection = document.getElementById("loginSection");
+    const registerSection = document.getElementById("registerSection");
+
+    function switchToLogin() {
+      tabLogin.classList.add("border-purple-500", "text-purple-400", "font-semibold");
+      tabLogin.setAttribute("aria-selected", "true");
+      tabRegister.classList.remove("border-purple-500", "text-purple-400", "font-semibold");
+      tabRegister.classList.add("text-purple-600");
+      tabRegister.setAttribute("aria-selected", "false");
+      tabRegister.classList.remove("border-purple-500");
+      tabRegister.classList.add("border-transparent");
+      tabLogin.classList.remove("border-transparent");
+      tabLogin.classList.add("border-purple-500");
+      loginSection.classList.remove("hidden");
+      loginSection.classList.add("block");
+      registerSection.classList.add("hidden");
+      registerSection.classList.remove("block");
+      clearLoginFields();
+      clearRegisterFields();
+    }
+
+    function switchToRegister() {
+      tabRegister.classList.add("border-purple-500", "text-purple-400", "font-semibold");
+      tabRegister.setAttribute("aria-selected", "true");
+      tabLogin.classList.remove("border-purple-500", "text-purple-400", "font-semibold");
+      tabLogin.classList.add("text-purple-600");
+      tabLogin.setAttribute("aria-selected", "false");
+      tabLogin.classList.remove("border-purple-500");
+      tabLogin.classList.add("border-transparent");
+      tabRegister.classList.remove("border-transparent");
+      tabRegister.classList.add("border-purple-500");
+      registerSection.classList.remove("hidden");
+      registerSection.classList.add("block");
+      loginSection.classList.add("hidden");
+      loginSection.classList.remove("block");
+      clearLoginFields();
+      clearRegisterFields();
+    }
+
+    tabLogin.addEventListener("click", switchToLogin);
+    tabRegister.addEventListener("click", switchToRegister);
+
+    function setupPasswordToggle(toggleId, inputId) {
+      const toggleBtn = document.getElementById(toggleId);
+      const input = document.getElementById(inputId);
+      toggleBtn.addEventListener("click", () => {
+        if (input.type === "password") {
+          input.type = "text";
+          toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        } else {
+          input.type = "password";
+          toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+        }
+      });
+    }
+    setupPasswordToggle("toggleLoginPassword", "loginPassword");
+    setupPasswordToggle("toggleRegisterPassword", "registerPassword");
+  </script>
+</body>
+</html>

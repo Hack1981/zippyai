@@ -1,0 +1,281 @@
+<html lang="pt-BR" class="scroll-smooth">
+ <head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>ZIPPY - Inteligência Artificial</title>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/imagem/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png">
+  <link rel="manifest" href="/imagem/site.webmanifest">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+   rel="stylesheet"
+  />
+  <link
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+   rel="stylesheet"
+  />
+  <style>
+   html {
+    scroll-behavior: smooth;
+   }
+   body {
+    font-family: "Inter", sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+   }
+   @keyframes fadeInUp {
+    0% {
+     opacity: 0;
+     transform: translateY(20px);
+    }
+    100% {
+     opacity: 1;
+     transform: translateY(0);
+    }
+   }
+   .fadeInUp {
+    animation: fadeInUp 0.8s ease forwards;
+   }
+   .fadeInUpDelay1 {
+    animation-delay: 0.2s;
+   }
+   .fadeInUpDelay2 {
+    animation-delay: 0.4s;
+   }
+   .fadeInUpDelay3 {
+    animation-delay: 0.6s;
+   }
+  </style>
+ </head>
+ <body id="body" class="antialiased">
+  <header
+   class="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md z-50 shadow-lg"
+  >
+   <nav
+    class="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between h-16"
+   >
+    <a
+     class="text-3xl font-extrabold text-indigo-500 hover:text-indigo-600 transition-colors duration-300 tracking-wide"
+     href="#"
+     id="home-link"
+     >ZIPPY</a
+    >
+    <ul class="hidden md:flex space-x-10 font-semibold text-gray-300">
+     <li>
+      <a
+       class="hover:text-indigo-500 transition-colors duration-300 flex items-center gap-2"
+       href="#"
+       id="btn-zippy"
+       ><i class="fas fa-robot text-indigo-400"></i> Ir para Zippy</a
+      >
+     </li>
+     <li>
+      <a
+       class="hover:text-indigo-500 transition-colors duration-300 flex items-center gap-2"
+       href="#"
+       id="btn-docs"
+       ><i class="fas fa-book text-indigo-400"></i> Documentação</a
+      >
+     </li>
+    </ul>
+    <button
+     aria-label="Abrir menu"
+     class="md:hidden ml-4 p-2 rounded-md text-indigo-400 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+     id="btn-menu"
+    >
+     <i class="fas fa-bars text-xl"></i>
+    </button>
+   </nav>
+   <div
+    class="md:hidden bg-gray-900/95 backdrop-blur-md shadow-inner max-h-0 overflow-hidden transition-max-height duration-500"
+    id="mobile-menu"
+   >
+    <ul class="flex flex-col space-y-5 px-6 py-6 font-semibold text-gray-300">
+     <li>
+      <a
+       class="hover:text-indigo-500 transition-colors duration-300 flex items-center gap-3"
+       href="#"
+       id="btn-zippy-mobile"
+       ><i class="fas fa-robot text-indigo-400"></i> Ir para Zippy</a
+      >
+     </li>
+     <li>
+      <a
+       class="hover:text-indigo-500 transition-colors duration-300 flex items-center gap-3"
+       href="#"
+       id="btn-docs-mobile"
+       ><i class="fas fa-book text-indigo-400"></i> Documentação</a
+      >
+     </li>
+    </ul>
+   </div>
+  </header>
+  <main class="pt-24 max-w-6xl mx-auto px-6 sm:px-12">
+   <section class="text-center fadeInUp">
+    <h1
+     class="text-5xl sm:text-6xl font-extrabold text-indigo-500 mb-8 leading-tight tracking-wide"
+    >
+     ZIPPY - Inteligência Artificial Avançada
+    </h1>
+    <p class="text-gray-400 max-w-4xl mx-auto text-lg sm:text-xl leading-relaxed">
+     ZIPPY é um modelo de inteligência artificial focado em geração e
+     compreensão de texto, com acesso em tempo real à internet para fornecer
+     informações atualizadas. Futuramente, será capaz de gerar vídeos e imagens,
+     ampliando as possibilidades criativas e funcionais para seus usuários.
+    </p>
+   </section>
+   <section
+    class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fadeInUp fadeInUpDelay1"
+   >
+    <article
+     class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col"
+    >
+     <div class="flex items-center mb-4 text-indigo-400 text-3xl">
+      <i class="fas fa-globe"></i>
+     </div>
+     <h2 class="text-xl font-semibold text-indigo-400 mb-2">
+      Acesso em Tempo Real à Web
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed text-base">
+      Diferente de modelos tradicionais, ZIPPY pode consultar a internet para
+      obter dados atualizados, garantindo respostas precisas e relevantes para
+      suas perguntas e tarefas.
+     </p>
+    </article>
+    <article
+     class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col"
+    >
+     <div class="flex items-center mb-4 text-indigo-400 text-3xl">
+      <i class="fas fa-file-alt"></i>
+     </div>
+     <h2 class="text-xl font-semibold text-indigo-400 mb-2">
+      Geração Avançada de Texto
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed text-base">
+      Crie conteúdos ricos e coerentes, desde artigos, resumos, roteiros até
+      diálogos complexos, com fluidez e naturalidade impressionantes.
+     </p>
+    </article>
+    <article
+     class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col"
+    >
+     <div class="flex items-center mb-4 text-indigo-400 text-3xl">
+      <i class="fas fa-video"></i>
+     </div>
+     <h2 class="text-xl font-semibold text-indigo-400 mb-2">
+      Futuras Capacidades de Geração de Vídeo
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed text-base">
+      Em breve, ZIPPY será capaz de gerar vídeos personalizados a partir de
+      descrições textuais, abrindo novas fronteiras para criação de conteúdo
+      multimídia automatizado.
+     </p>
+    </article>
+    <article
+     class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col"
+    >
+     <div class="flex items-center mb-4 text-indigo-400 text-3xl">
+      <i class="fas fa-image"></i>
+     </div>
+     <h2 class="text-xl font-semibold text-indigo-400 mb-2">
+      Capacidades de Geração de Imagens
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed text-base">
+      A geração de imagens está integrada para permitir a criação de ilustrações,
+      designs e arte digital diretamente a partir de comandos textuais,
+      facilitando processos criativos.
+     </p>
+    </article>
+    <article
+     class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col col-span-full sm:col-span-2 lg:col-span-3"
+    >
+     <div class="flex items-center mb-4 text-indigo-400 text-3xl">
+      <i class="fas fa-cogs"></i>
+     </div>
+     <h2 class="text-xl font-semibold text-indigo-400 mb-2">Aplicações Práticas</h2>
+     <p class="text-gray-300 flex-grow leading-relaxed text-base">
+      ZIPPY pode ser usado para atendimento ao cliente, criação de conteúdo,
+      suporte educacional, automação de tarefas e muito mais, sempre com a
+      vantagem do acesso à informação atualizada.
+     </p>
+    </article>
+   </section>
+  </main>
+  <footer class="mt-20 py-8 bg-gray-900 text-gray-400 text-center text-sm select-none">
+   © 2024 ZIPPY. Todos os direitos reservados.
+  </footer>
+  <script>
+   // Mobile menu toggle
+   const btnMenu = document.getElementById("btn-menu");
+   const mobileMenu = document.getElementById("mobile-menu");
+
+   btnMenu.addEventListener("click", () => {
+    if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
+     mobileMenu.style.maxHeight = "0px";
+    } else {
+     mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+    }
+   });
+
+   // Navigation functions for Zippy and Docs
+   const btnZippy = document.getElementById("btn-zippy");
+   const btnZippyMobile = document.getElementById("btn-zippy-mobile");
+   const btnDocs = document.getElementById("btn-docs");
+   const btnDocsMobile = document.getElementById("btn-docs-mobile");
+   const homeLink = document.getElementById("home-link");
+
+   function goToZippy() {
+    window.location.href = "https://zippy.icu/chat";
+   }
+
+   function goToDocs() {
+    window.location.href = "https://zippy.icu/docs";
+   }
+
+   btnZippy.addEventListener("click", (e) => {
+    e.preventDefault();
+    goToZippy();
+   });
+
+   btnZippyMobile.addEventListener("click", (e) => {
+    e.preventDefault();
+    goToZippy();
+    if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
+     mobileMenu.style.maxHeight = "0px";
+    }
+   });
+
+   btnDocs.addEventListener("click", (e) => {
+    e.preventDefault();
+    goToDocs();
+   });
+
+   btnDocsMobile.addEventListener("click", (e) => {
+    e.preventDefault();
+    goToDocs();
+    if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
+     mobileMenu.style.maxHeight = "0px";
+    }
+   });
+
+   homeLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
+     mobileMenu.style.maxHeight = "0px";
+    }
+   });
+
+   // Check if user key exists in localStorage and redirect if so
+   document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("user")) {
+     window.location.href = "https://zippy.icu/chat";
+    }
+   });
+  </script>
+ </body>
+</html>
