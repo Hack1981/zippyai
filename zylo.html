@@ -1,3 +1,4 @@
+
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -846,58 +847,6 @@
     body.dark .imagem-prompt {
       color: #f0f9ff;
     }
-    /* Additional markdown styles */
-    .message.bot a {
-      color: #2563eb;
-      text-decoration: underline;
-      word-break: break-word;
-    }
-    body.dark .message.bot a {
-      color: #3b82f6;
-    }
-    .message.bot code {
-      font-family: 'Source Code Pro', monospace, monospace;
-      background-color: #e2e8f0;
-      color: #2d3748;
-      padding: 0.15em 0.3em;
-      border-radius: 0.3em;
-      font-size: 0.9em;
-      user-select: text;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    body.dark .message.bot code {
-      background-color: #2a2a2a;
-      color: #d1d5db;
-    }
-    .message.bot pre {
-      background-color: #e2e8f0;
-      color: #2d3748;
-      padding: 1em;
-      border-radius: 0.5em;
-      overflow-x: auto;
-      font-family: 'Source Code Pro', monospace, monospace;
-      font-size: 0.9em;
-      user-select: text;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin: 0.5em 0;
-    }
-    body.dark .message.bot pre {
-      background-color: #2a2a2a;
-      color: #d1d5db;
-    }
-    .message.bot blockquote {
-      border-left: 4px solid #2563eb;
-      padding-left: 1em;
-      color: #555;
-      font-style: italic;
-      margin: 0.5em 0;
-    }
-    body.dark .message.bot blockquote {
-      border-left-color: #3b82f6;
-      color: #bbb;
-    }
   </style>
 </head>
 <body>
@@ -1303,38 +1252,9 @@
 
       let escapedText = escapeHtml(text);
 
-      // Links: [text](url)
-      escapedText = escapedText.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-
-      // URLs auto-link (http/https)
-      escapedText = escapedText.replace(/(^|\s)(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
-
-      // Bold: **text**
       escapedText = escapedText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-      // Italic: *text* but not if surrounded by digits (to avoid math like 10*10*10)
-      escapedText = escapedText.replace(/(^|[^\d*])\*(?!\s)(.+?)(?<!\s)\*([^\d*]|$)/g, (match, p1, p2, p3) => {
-        return p1 + '<em>' + p2 + '</em>' + p3;
-      });
-
-      // Inline code: `code`
-      escapedText = escapedText.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-
-      // Code blocks: ```code```
-      escapedText = escapedText.replace(/```([\s\S]+?)```/g, '<pre>$1</pre>');
-
-      // Blockquotes: lines starting with >
-      escapedText = escapedText.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
-
-      // Subscript: H~2~ or H<sub>2</sub> (support ~...~ for subscript)
-      escapedText = escapedText.replace(/~(.*?)~/g, '<sub>$1</sub>');
-
-      // Superscript: 10^2^ or 10<sup>2</sup> (support ^...^ for superscript)
-      escapedText = escapedText.replace(/\^(.*?)\^/g, '<sup>$1</sup>');
-
-      // Line breaks: \n or \\n
+      escapedText = escapedText.replace(/\*(.+?)\*/g, '<em>$1</em>');
       escapedText = escapedText.replace(/\\n/g, '<br>');
-      escapedText = escapedText.replace(/\n/g, '<br>');
 
       return escapedText;
     }
