@@ -1,7 +1,8 @@
-
+<!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>ZIPPY</title>
 
@@ -9,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png">
   <link rel="manifest" href="/imagem/site.webmanifest">
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link
     rel="stylesheet"
@@ -19,6 +20,18 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\[', right: '\\]', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });"></script>
   <style>
     /* Reset horizontal overflow and prevent side scroll */
     html, body {
@@ -847,6 +860,13 @@
     body.dark .imagem-prompt {
       color: #f0f9ff;
     }
+    /* KaTeX overrides for dark mode */
+    body.dark .katex {
+      color: #ddd !important;
+    }
+    body.dark .katex .katex-html {
+      color: #ddd !important;
+    }
   </style>
 </head>
 <body>
@@ -1189,6 +1209,16 @@
         attachImagePreviewHandlers();
         setTimeout(() => {
           chatMessages.scrollTop = chatMessages.scrollHeight;
+          // Re-render math after loading messages
+          renderMathInElement(chatMessages, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '\\[', right: '\\]', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false }
+            ],
+            throwOnError: false
+          });
         }, 50);
       } catch (error) {
         console.error("Erro ao carregar histórico:", error);
@@ -1285,6 +1315,18 @@
       chatMessages.appendChild(messageWrapper);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       if (save) saveMessagesToStorage();
+      if (!fromUser) {
+        // Render math in new bot message
+        renderMathInElement(messageWrapper, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
+      }
     }
 
     function addMessageFromHTML(html, fromUser = false, save = true) {
@@ -1300,6 +1342,18 @@
       chatMessages.appendChild(messageWrapper);
       chatMessages.scrollTop = chatMessages.scrollHeight;
       if (save) saveMessagesToStorage();
+      if (!fromUser) {
+        // Render math in new bot message
+        renderMathInElement(messageWrapper, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
+      }
     }
 
     async function typeMessage(text) {
@@ -1317,6 +1371,17 @@
       await saveMessagesToStorage();
 
       await new Promise(resolve => setTimeout(resolve, 50));
+
+      // Render math in typed message
+      renderMathInElement(messageWrapper, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
 
       isTypingResponse = false;
       updateEnviarBtnState();
