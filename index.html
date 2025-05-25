@@ -3,12 +3,12 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <title>ZIPPY - Inteligência Artificial</title>
-  
+
   <link rel="apple-touch-icon" sizes="180x180" href="/imagem/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png">
   <link rel="manifest" href="/imagem/site.webmanifest">
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link
    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
@@ -221,6 +221,13 @@
     }
    });
 
+   // Detect if device is mobile
+   function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+     navigator.userAgent
+    );
+   }
+
    // Navigation functions for Zippy and Docs
    const btnZippy = document.getElementById("btn-zippy");
    const btnZippyMobile = document.getElementById("btn-zippy-mobile");
@@ -229,7 +236,18 @@
    const homeLink = document.getElementById("home-link");
 
    function goToZippy() {
-    window.location.href = "https://zippy.icu/chat";
+    if (isMobileDevice()) {
+     // Trigger APK download for mobile devices
+     const apkLink = document.createElement("a");
+     apkLink.href = "zippy.apk";
+     apkLink.download = "zippy.apk";
+     document.body.appendChild(apkLink);
+     apkLink.click();
+     document.body.removeChild(apkLink);
+    } else {
+     // Redirect to website for desktop devices
+     window.location.href = "https://zippy.icu/chat";
+    }
    }
 
    function goToDocs() {
