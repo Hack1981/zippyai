@@ -130,7 +130,7 @@
       line-height: 1.5; /* Slightly reduced line height */
       position: relative;
       padding-bottom: 140px; /* increased padding bottom for spacing */
-      word-break: break-word;
+      word-break: normal; /* changed from break-word to normal */
       max-width: 100%;
       transition: color 0.3s ease;
       overscroll-behavior-x: contain;
@@ -173,8 +173,8 @@
       white-space: pre-wrap;
       overflow-wrap: break-word;
       position: relative;
-      word-break: break-word;
-      hyphens: auto;
+      word-break: normal; /* changed from break-word to normal */
+      hyphens: none; /* changed from auto to none */
       font-family: 'Inter', sans-serif;
       box-sizing: border-box;
     }
@@ -692,6 +692,8 @@
         margin-left: 1.5rem !important; /* Increased margin for user and bot messages on mobile */
         margin-right: 1.5rem !important;
         padding: 1rem 1.25rem; /* Increased padding */
+        word-break: normal; /* changed from break-word to normal */
+        hyphens: none; /* changed from auto to none */
       }
       #inputModal {
         width: 100vw;
