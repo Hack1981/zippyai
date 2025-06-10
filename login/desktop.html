@@ -188,37 +188,6 @@
         transform: translateY(0);
       }
     }
-    /* Google login button style */
-    .google-login-btn {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-    }
-    .google-login-btn button {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: white;
-      color: #444;
-      font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-    }
-    .google-login-btn button:hover,
-    .google-login-btn button:focus {
-      background-color: #f0f0f0;
-      outline: none;
-    }
-    .google-login-btn img {
-      width: 24px;
-      height: 24px;
-      object-fit: contain;
-    }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center px-6 py-12">
@@ -289,12 +258,6 @@
           Entrar
         </button>
       </form>
-      <div class="google-login-btn">
-        <button id="googleLoginButton" type="button" aria-label="Login com Google">
-          <img src="https://zippy.icu/login/google.jpeg" alt="Ícone oficial do Google para login, logotipo colorido do Google em fundo branco" />
-          Login com Google
-        </button>
-      </div>
     </div>
 
     <!-- Right Panel (Create Account Form) -->
@@ -359,12 +322,6 @@
           Criar Conta
         </button>
       </form>
-      <div class="google-login-btn">
-        <button id="googleLoginButtonCreate" type="button" aria-label="Login com Google">
-          <img src="https://zippy.icu/login/google.jpeg" alt="Ícone oficial do Google para login, logotipo colorido do Google em fundo branco" />
-          Login com Google
-        </button>
-      </div>
     </div>
 
     <!-- Right Description (for Login) -->
@@ -516,9 +473,6 @@
 
     const loginSubmitBtn = document.getElementById('loginSubmit');
     const createSubmitBtn = document.getElementById('createSubmit');
-
-    const googleLoginButton = document.getElementById('googleLoginButton');
-    const googleLoginButtonCreate = document.getElementById('googleLoginButtonCreate');
 
     let isLogin = true;
 
@@ -712,32 +666,6 @@
       rightPanel.style.transform = 'translateX(100%)';
       rightDescription.style.transform = 'translateX(0)';
       clearAllInputs();
-    });
-
-    // Google Login button logic for both buttons
-    googleLoginButton.addEventListener("click", () => {
-      window.location.href = "https://api-criar-conta.vercel.app/auth/google-login";
-    });
-    googleLoginButtonCreate.addEventListener("click", () => {
-      window.location.href = "https://api-criar-conta.vercel.app/auth/google-login";
-    });
-
-    // On page load, check URL params for Google login response
-    window.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
-      const email = params.get("email");
-      const erro = params.get("error");
-
-      if (erro === "senha") {
-        showMessage("Conta criada com senha. Use login tradicional.", "error");
-      } else if (id && email) {
-        const user = { id, email };
-        localStorage.setItem("user", JSON.stringify(user));
-        setTimeout(() => {
-          window.location.href = "https://zippy.icu/chat";
-        }, 1500);
-      }
     });
   </script>
 </body>
