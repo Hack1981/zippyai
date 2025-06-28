@@ -1117,7 +1117,7 @@
       <h1>
         ZIPPY
       </h1>
-      <button id="plusBtn" type="button" aria-label="Obter Plus" title="Obter Plus">Obter Plus</button>
+      <button id="plusBtn" type="button" aria-label="Obter Plus+" title="Obter Plus+">Obter Plus+</button>
       <button id="settingsBtn" aria-label="Abrir configurações" title="Configurações" type="button">
         <i class="fas fa-cog" aria-hidden="true"></i>
       </button>
@@ -2263,7 +2263,7 @@
           // Show only the account type name, capitalized first letter
           const displayTipo = data.tipo_da_conta.charAt(0).toUpperCase() + data.tipo_da_conta.slice(1);
           accountTypeLabel.textContent = displayTipo;
-          if (tipo === "plus+" || tipo === "plus") {
+          if (tipo === "plus+" || tipo === "plus+") {
             // Remove the Obter Plus button if exists
             if (plusBtn) {
               plusBtn.remove();
