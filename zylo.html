@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -78,6 +77,7 @@
       transition: border-color 0.3s ease;
       z-index: 20;
       position: relative;
+      gap: 1rem;
     }
     body.dark header {
       border-color: #333;
@@ -91,6 +91,46 @@
       letter-spacing: 0.05em;
       color: inherit;
       user-select: text;
+      flex-shrink: 0;
+    }
+    #plusBtn {
+      border: 2px solid #7c3aed; /* purple-700 */
+      color: #7c3aed;
+      background-color: transparent;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      min-width: 120px;
+      height: 40px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #plusBtn:hover,
+    #plusBtn:focus {
+      background-color: #7c3aed;
+      color: white;
+      outline: none;
+    }
+    body.dark #plusBtn {
+      border-color: #a78bfa; /* purple-400 */
+      color: #a78bfa;
+      background-color: transparent;
+    }
+    body.dark #plusBtn:hover,
+    body.dark #plusBtn:focus {
+      background-color: #a78bfa;
+      color: #1e1e1e;
+      outline: none;
     }
     #settingsBtn {
       background: transparent;
@@ -496,6 +536,24 @@
       border-color: #444;
       color: #ddd;
     }
+    #accountTypeLabel {
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      background-color: #e0e0e0;
+      color: #333;
+      user-select: text;
+      font-family: 'Inter', sans-serif;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    body.dark #accountTypeLabel {
+      background-color: #3a3a3a;
+      color: #ddd;
+      border-color: #555;
+    }
     #clearHistoryBtn, #disconnectBtn {
       background-color: #e53e3e;
       border: none;
@@ -624,6 +682,16 @@
       #settingsBtn {
         font-size: 1.5rem;
       }
+      #plusBtn {
+        min-width: 100px;
+        height: 36px;
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
       #inputModal {
         width: 75vw;
         max-width: 480px;
@@ -669,15 +737,30 @@
         background: inherit;
         border-bottom: 1px solid #e5e5e5;
         z-index: 30;
+        justify-content: space-between;
+        gap: 0;
       }
       body.dark header {
         border-color: #333;
       }
       header h1 {
         font-size: 1.25rem;
+        position: relative;
+        left: 0;
+        transform: none;
       }
       #settingsBtn {
         font-size: 1.3rem;
+      }
+      #plusBtn {
+        min-width: 90px;
+        height: 32px;
+        font-size: 0.9rem;
+        padding: 0.3rem 0.9rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
       #chatMessages {
         padding: 5rem 1rem 1rem 1rem; /* Add top padding to avoid header overlap */
@@ -1034,6 +1117,7 @@
       <h1>
         ZIPPY
       </h1>
+      <button id="plusBtn" type="button" aria-label="Obter Plus" title="Obter Plus">Obter Plus</button>
       <button id="settingsBtn" aria-label="Abrir configurações" title="Configurações" type="button">
         <i class="fas fa-cog" aria-hidden="true"></i>
       </button>
@@ -1092,6 +1176,7 @@
       </button>
       <h2 id="settingsTitle">ZIPPY</h2>
       <div id="userEmail" class="email-display" tabindex="0" aria-readonly="true"></div>
+      <div id="accountTypeLabel" aria-live="polite" aria-atomic="true" tabindex="0">Carregando...</div>
       <button id="clearHistoryBtn" type="button" aria-label="Limpar histórico de mensagens" title="Limpar histórico de mensagens">
         <i class="fas fa-trash-alt"></i> Limpar histórico
       </button>
@@ -1246,15 +1331,15 @@
       });
     }
 
-    // Retry helper with 2 attempts max, then throw error
-    async function retryFetch(fn, retries = 2, delay = 700) {
+    // Retry helper with 3 attempts max, then throw error
+    async function retryFetch(fn, retries = 3, delay = 700) {
       let lastError;
-      for (let attempt = 0; attempt <= retries; attempt++) {
+      for (let attempt = 0; attempt < retries; attempt++) {
         try {
           return await fn();
         } catch (err) {
           lastError = err;
-          if (attempt < retries) {
+          if (attempt < retries - 1) {
             await new Promise(r => setTimeout(r, delay));
           }
         }
@@ -1278,6 +1363,7 @@
       }
       await loadMessagesFromStorage();
       loadUserEmail();
+      await loadAccountType();
       loadThemeFromStorage();
       autoResizeTextarea();
     });
@@ -1347,6 +1433,7 @@
     const settingsModal = document.getElementById("settingsModal");
     const settingsCloseBtn = document.getElementById("settingsCloseBtn");
     const userEmailDisplay = document.getElementById("userEmail");
+    const accountTypeLabel = document.getElementById("accountTypeLabel");
     const clearHistoryBtn = document.getElementById("clearHistoryBtn");
     const disconnectBtn = document.getElementById("disconnectBtn");
     const themeToggleSwitch = document.getElementById("themeToggleSwitch");
@@ -1360,6 +1447,8 @@
     const imageSelectBtn = document.getElementById("imageSelectBtn");
     const imageInput = document.getElementById("imageInput");
     const imageSelectedIndicator = document.getElementById("imageSelectedIndicator");
+
+    const plusBtn = document.getElementById("plusBtn");
 
     let isTypingResponse = false;
     let isImagemMode = false;
@@ -2142,6 +2231,70 @@
       }
     }
 
+    async function fetchWithRetry(url, options = {}, retries = 3, delay = 700) {
+      let lastError;
+      for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+          return response;
+        } catch (error) {
+          lastError = error;
+          if (attempt < retries - 1) {
+            await new Promise(r => setTimeout(r, delay));
+          }
+        }
+      }
+      throw lastError;
+    }
+
+    async function loadAccountType() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.email) {
+        accountTypeLabel.textContent = "Desconhecido";
+        return;
+      }
+      const emailEncoded = encodeURIComponent(user.email);
+      try {
+        const response = await fetchWithRetry(`https://api-criar-conta.vercel.app/check-account/?email=${emailEncoded}`, {}, 3, 700);
+        const data = await response.json();
+        if (data.exists && data.tipo_da_conta) {
+          const tipo = data.tipo_da_conta.toLowerCase();
+          // Show only the account type name, capitalized first letter
+          const displayTipo = data.tipo_da_conta.charAt(0).toUpperCase() + data.tipo_da_conta.slice(1);
+          accountTypeLabel.textContent = displayTipo;
+          if (tipo === "plus+" || tipo === "plus") {
+            // Remove the Obter Plus button if exists
+            if (plusBtn) {
+              plusBtn.remove();
+            }
+          } else {
+            // Show button with label "Obter Plus+"
+            if (plusBtn) {
+              plusBtn.textContent = "Obter Plus+";
+              plusBtn.disabled = false;
+              plusBtn.style.display = "flex";
+            }
+          }
+        } else {
+          accountTypeLabel.textContent = "Desconhecido";
+          if (plusBtn) {
+            plusBtn.textContent = "Obter Plus+";
+            plusBtn.disabled = false;
+            plusBtn.style.display = "flex";
+          }
+        }
+      } catch (error) {
+        console.error("Erro ao carregar tipo da conta:", error);
+        accountTypeLabel.textContent = "Desconhecido";
+        if (plusBtn) {
+          plusBtn.textContent = "Obter Plus+";
+          plusBtn.disabled = false;
+          plusBtn.style.display = "flex";
+        }
+      }
+    }
+
     clearHistoryBtn.addEventListener("click", async () => {
       const confirmed = await customConfirm("Tem certeza que deseja limpar o histórico de mensagens?");
       if (!confirmed) return;
@@ -2203,6 +2356,10 @@
 
     themeToggleSwitch.addEventListener('change', () => {
       setTheme(themeToggleSwitch.checked);
+    });
+
+    plusBtn.addEventListener("click", () => {
+      window.location.href = "https://zippy.icu/planos";
     });
 
     updateEnviarBtnState();
