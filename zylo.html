@@ -1362,11 +1362,12 @@
         const inputRect = inputModal.getBoundingClientRect();
         chatMessages.style.paddingBottom = `${inputRect.height + 60}px`;
       }
-      await loadMessagesFromStorage();
       loadUserEmail();
-      await loadAccountType();
       loadThemeFromStorage();
       autoResizeTextarea();
+
+      // Load account type and messages in parallel to speed up initial UI readiness
+      await Promise.all([loadAccountType(), loadMessagesFromStorage()]);
     });
 
     // Adjust input modal height and position for desktop and mobile devices
@@ -1474,6 +1475,7 @@
       try {
         const messages = await getMessages(user.id);
         if (messages.length === 0) {
+          // Fetch history from API and save to IndexedDB
           const data = await retryFetch(async () => {
             const response = await fetch(`https://api.zippyapi.icu/historico?email=${encodeURIComponent(user.email)}`);
             if (!response.ok) throw new Error(`Erro ao buscar histórico! Status: ${response.status}`);
@@ -1514,28 +1516,40 @@
               }
             });
             await saveMessages(user.id, msgs);
+            // Append messages to chat in a batch for better performance
+            const fragment = document.createDocumentFragment();
             msgs.forEach(({ html, fromUser }) => {
-              addMessageFromHTML(html, fromUser, false);
+              const messageWrapper = document.createElement("div");
+              messageWrapper.classList.add("fade-in-up", "message");
+              messageWrapper.classList.add(fromUser ? "user" : "bot");
+              messageWrapper.innerHTML = html;
+              fragment.appendChild(messageWrapper);
             });
+            chatMessages.appendChild(fragment);
           }
         } else {
+          // Append messages from IndexedDB in batch
+          const fragment = document.createDocumentFragment();
           messages.forEach(({ html, fromUser }) => {
-            addMessageFromHTML(html, fromUser, false);
+            const messageWrapper = document.createElement("div");
+            messageWrapper.classList.add("fade-in-up", "message");
+            messageWrapper.classList.add(fromUser ? "user" : "bot");
+            messageWrapper.innerHTML = html;
+            fragment.appendChild(messageWrapper);
           });
+          chatMessages.appendChild(fragment);
         }
         attachImagePreviewHandlers();
-        setTimeout(() => {
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-          renderMathInElement(chatMessages, {
-            delimiters: [
-              { left: '$$', right: '$$', display: true },
-              { left: '\\[', right: '\\]', display: true },
-              { left: '$', right: '$', display: false },
-              { left: '\\(', right: '\\)', display: false }
-            ],
-            throwOnError: false
-          });
-        }, 50);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        renderMathInElement(chatMessages, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
       } catch (error) {
         console.error("Erro ao carregar histórico:", error);
         showToast("Erro ao carregar histórico.", "error");
@@ -1549,14 +1563,6 @@
       const messageElements = chatMessages.querySelectorAll(".message");
       for (const msgEl of messageElements) {
         const fromUser = msgEl.classList.contains("user");
-        if (fromUser) {
-          const img = msgEl.querySelector("img");
-          if (img && img.src) {
-            // Store the message HTML as is, including image src (base64 or URL)
-            messages.push({ html: msgEl.innerHTML, fromUser });
-            continue;
-          }
-        }
         messages.push({ html: msgEl.innerHTML, fromUser });
       }
       try {
@@ -1616,7 +1622,6 @@
 
     function autoResizeTextarea() {
       const ta = perguntaInput;
-      const inputWrapper = document.getElementById('inputWrapper');
       ta.style.height = 'auto';
       ta.style.width = '100%';
       ta.style.height = '2.75rem';
