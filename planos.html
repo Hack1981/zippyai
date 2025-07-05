@@ -309,6 +309,43 @@
       0% { transform: rotate(0deg);}
       100% { transform: rotate(360deg);}
     }
+
+    /* Custom layout for pricing cards container */
+    .pricing-container {
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 60px; /* space between cards */
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .plan-gratis {
+      flex: 1 1 45%;
+      max-width: 480px;
+      margin-right: auto;
+      transform: translateX(-15px);
+    }
+    .plan-vip {
+      flex: 1 1 45%;
+      max-width: 480px;
+      margin-left: auto;
+      transform: translateX(15px);
+    }
+
+    @media (max-width: 768px) {
+      .pricing-container {
+        flex-direction: column;
+        gap: 24px;
+        padding: 0 16px;
+      }
+      .plan-gratis, .plan-vip {
+        max-width: 100%;
+        flex: none;
+        margin: 0;
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body class="bg-[#181818] text-white min-h-screen flex flex-col items-center py-10 px-4 relative">
@@ -338,15 +375,11 @@
   </div>
 
   <!-- Pricing cards container -->
-  <div
-    class="flex flex-col md:flex-row gap-6 max-w-[1100px] w-full"
-    role="list"
-    aria-label="Pricing plans"
-  >
+  <div class="pricing-container" role="list" aria-label="Pricing plans">
     <!-- Grátis -->
     <section
       id="plan-gratis"
-      class="flex-1 border border-gray-400 rounded-lg p-6 md:p-8 max-w-md"
+      class="plan-gratis border border-gray-400 rounded-lg p-6 md:p-8"
       aria-labelledby="gratis-title"
     >
       <h3
@@ -409,7 +442,7 @@
     <!-- Vip -->
     <section
       id="plan-vip"
-      class="flex-1 max-w-md rounded-lg border border-green-600 p-6 md:p-8 relative flex flex-col justify-between"
+      class="plan-vip max-w-md rounded-lg border border-green-600 p-6 md:p-8 relative flex flex-col justify-between"
       aria-labelledby="vip-title"
     >
       <div>
@@ -475,79 +508,6 @@
           </li>
         </ul>
       </div>
-    </section>
-
-    <!-- Plus+ -->
-    <section
-      id="plan-plus"
-      class="flex-1 border border-gray-400 rounded-lg p-6 md:p-8 max-w-md"
-      aria-labelledby="plusplus-title"
-    >
-      <h3
-        id="plusplus-title"
-        class="text-white text-xl font-semibold mb-3"
-        lang="pt"
-      >
-        Plus+
-      </h3>
-      <div class="flex items-center mb-3 space-x-2">
-        <span class="text-yellow-400 text-base font-semibold">R$</span>
-        <span
-          class="text-yellow-300 text-4xl font-light leading-none"
-          aria-label="79.99"
-          >79<span class="align-top text-sm">⁹⁹</span></span
-        >
-        <span class="text-yellow-400 text-xs leading-tight flex flex-col -ml-1">
-          <span>BRL/</span>
-          <span>mensal</span>
-        </span>
-      </div>
-      <p class="text-yellow-300 mb-6 max-w-[280px]">
-        Obtenha o melhor da OpenAI com o nível mais elevado de acesso
-      </p>
-      <button
-        id="btn-plus"
-        class="w-full bg-yellow-400 text-black rounded-full py-2.5 text-sm font-semibold mb-6 transition-transform duration-200 hover:bg-yellow-500"
-        type="button"
-        data-plan="plus+"
-      >
-        Obter o Plus+
-      </button>
-      <ul class="text-yellow-300 text-sm space-y-2 mb-6">
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i> Tudo do Vip
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso ilimitado a todos os modelos de raciocínio e ao GPT-4o completo.
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i> Acesso ilimitado à voz
-          avançada
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso estendido a investigações, capaz de realizar pesquisas on-line em
-          várias etapas para tarefas complexas.
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso às prévias experimentais do GPT-4.5 e do Operator
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso ao modo o1 pro, que utiliza mais capacidade computacional para
-          oferecer as melhores respostas às perguntas mais difíceis
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso estendido à geração de vídeos pelo Sora
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check mt-1 text-yellow-400 text-xs"></i>
-          Acesso à prévia experimental do agente Codex
-        </li>
-      </ul>
     </section>
   </div>
 
@@ -647,30 +607,22 @@
     function updateUI(accountType) {
       const btnGratis = document.getElementById('btn-gratis');
       const btnVip = document.getElementById('btn-vip');
-      const btnPlus = document.getElementById('btn-plus');
 
       // Reset all buttons to enabled state first
       disableButton(btnGratis, false, 'Obter Grátis', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
       disableButton(btnVip, false, 'Obter Vip', 'bg-green-600 hover:bg-green-700 text-white', 'bg-green-600 hover:bg-green-700 text-white');
-      disableButton(btnPlus, false, 'Obter o Plus+', 'bg-yellow-400 text-black', 'bg-yellow-400 text-black');
 
       if (accountType === 'grátis') {
-        // User has grátis: disable grátis button (current plan), enable Vip and Plus+
+        // User has grátis: disable grátis button (current plan), enable Vip
         disableButton(btnGratis, true, 'Seu plano atual', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
       } else if (accountType === 'vip') {
-        // User has vip: disable grátis and vip buttons, enable Plus+
+        // User has vip: disable grátis and vip buttons
         disableButton(btnGratis, true, 'Plano Grátis bloqueado', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
         disableButton(btnVip, true, 'Seu plano atual', 'bg-green-600 text-gray-400', 'bg-green-600 text-white');
-      } else if (accountType === 'plus+') {
-        // User has plus+: disable all buttons
-        disableButton(btnGratis, true, 'Plano Grátis bloqueado', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
-        disableButton(btnVip, true, 'Plano Vip bloqueado', 'bg-green-600 text-gray-400', 'bg-green-600 text-white');
-        disableButton(btnPlus, true, 'Seu plano atual', 'bg-yellow-400 text-gray-400', 'bg-yellow-400 text-black');
       } else {
         // Unknown or no account: enable all buttons with default text
         disableButton(btnGratis, false, 'Obter Grátis', 'bg-gray-600 text-gray-400', 'bg-gray-600 text-gray-400');
         disableButton(btnVip, false, 'Obter Vip', 'bg-green-600 hover:bg-green-700 text-white', 'bg-green-600 hover:bg-green-700 text-white');
-        disableButton(btnPlus, false, 'Obter o Plus+', 'bg-yellow-400 text-black', 'bg-yellow-400 text-black');
       }
     }
 
@@ -872,10 +824,8 @@
     // Attach click handlers to plan buttons
     function attachPlanButtons() {
       const btnVip = document.getElementById('btn-vip');
-      const btnPlus = document.getElementById('btn-plus');
 
       btnVip.addEventListener('click', () => openModal('vip'));
-      btnPlus.addEventListener('click', () => openModal('plus+'));
     }
 
     // Initialize app
