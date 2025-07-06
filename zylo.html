@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -1118,7 +1118,7 @@
       <h1>
         ZIPPY
       </h1>
-      <button id="plusBtn" type="button" aria-label="Obter Plus+" title="Obter Plus+">Obter Plus+</button>
+      <button id="plusBtn" type="button" aria-label="Obter VIP" title="Obter VIP" style="display:none;">Obter VIP</button>
       <button id="settingsBtn" aria-label="Abrir configurações" title="Configurações" type="button">
         <i class="fas fa-cog" aria-hidden="true"></i>
       </button>
@@ -2258,6 +2258,7 @@
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user || !user.email) {
         accountTypeLabel.textContent = "Desconhecido";
+        plusBtn.style.display = "none";
         return;
       }
       const emailEncoded = encodeURIComponent(user.email);
@@ -2269,34 +2270,35 @@
           // Show only the account type name, capitalized first letter
           const displayTipo = data.tipo_da_conta.charAt(0).toUpperCase() + data.tipo_da_conta.slice(1);
           accountTypeLabel.textContent = displayTipo;
-          if (tipo === "plus+" || tipo === "plus+") {
-            // Remove the Obter Plus button if exists
+          if (tipo === "vip") {
+            // Remove the Obter VIP button if exists
             if (plusBtn) {
-              plusBtn.remove();
+              plusBtn.style.display = "none";
             }
-          } else {
-            // Show button with label "Obter Plus+"
+          } else if (tipo === "grátis" || tipo === "gratis" || tipo === "free") {
+            // Show button with label "Obter VIP"
             if (plusBtn) {
-              plusBtn.textContent = "Obter Plus+";
+              plusBtn.textContent = "Obter VIP";
               plusBtn.disabled = false;
               plusBtn.style.display = "flex";
+            }
+          } else {
+            // For any other account type, hide the button
+            if (plusBtn) {
+              plusBtn.style.display = "none";
             }
           }
         } else {
           accountTypeLabel.textContent = "Desconhecido";
           if (plusBtn) {
-            plusBtn.textContent = "Obter Plus+";
-            plusBtn.disabled = false;
-            plusBtn.style.display = "flex";
+            plusBtn.style.display = "none";
           }
         }
       } catch (error) {
         console.error("Erro ao carregar tipo da conta:", error);
         accountTypeLabel.textContent = "Desconhecido";
         if (plusBtn) {
-          plusBtn.textContent = "Obter Plus+";
-          plusBtn.disabled = false;
-          plusBtn.style.display = "flex";
+          plusBtn.style.display = "none";
         }
       }
     }
