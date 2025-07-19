@@ -2,12 +2,12 @@
  <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Documentação da ZIPPY</title>
+  <title>Documentação Completa da ZIPPY</title>
   
-  <link rel="apple-touch-icon" sizes="180x180" href="/imagem/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png">
-  <link rel="manifest" href="/imagem/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/imagem/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/imagem/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/imagem/favicon-16x16.png" />
+  <link rel="manifest" href="/imagem/site.webmanifest" />
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link
@@ -18,17 +18,44 @@
    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap"
    rel="stylesheet"
   />
+  <style>
+    /* Fix header and keep layout spacing */
+    main {
+      padding-top: 80px; /* height of header + some spacing */
+    }
+    /* Custom scrollbar styles */
+    /* For WebKit browsers */
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f3f4f6; /* Tailwind gray-100 */
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #7c3aed; /* Tailwind purple-700 */
+      border-radius: 8px;
+      border: 3px solid #f3f4f6; /* Padding around thumb */
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #a78bfa; /* Tailwind purple-400 */
+    }
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #7c3aed #f3f4f6;
+  </style>
  </head>
  <body
   class="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-200 font-sans min-h-screen flex flex-col"
  >
   <header
-   class="bg-transparent border-b border-gray-300 dark:border-gray-700 p-6 flex items-center justify-between select-none"
+   class="bg-white dark:bg-gray-900 border-b border-gray-300 dark:border-gray-700 p-4 flex items-center justify-between select-none fixed top-0 left-0 right-0 z-50 shadow-sm"
   >
-   <h1 class="text-2xl font-extrabold flex items-center gap-3 tracking-widest">
+   <div class="flex items-center gap-3">
     <i aria-hidden="true" class="fas fa-robot text-3xl text-indigo-500"></i>
-    ZIPPY
-   </h1>
+    <h1 class="text-2xl font-extrabold tracking-widest select-text">ZIPPY</h1>
+   </div>
    <button
     aria-label="Voltar"
     class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
@@ -38,142 +65,205 @@
     <i class="fas fa-arrow-left"></i> Voltar
    </button>
   </header>
-  <main class="flex-grow max-w-5xl mx-auto px-6 py-10 w-full">
+  <main class="flex-grow max-w-6xl mx-auto px-8 py-20 w-full overflow-y-auto">
    <h2
-    class="text-4xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide"
+    class="text-5xl font-extrabold mb-16 text-center text-indigo-600 dark:text-indigo-400 tracking-wide"
    >
-    Documentação da ZIPPY
+    Documentação Completa da ZIPPY
    </h2>
 
-   <section class="mb-12">
+   <!-- Seção para usuários -->
+   <section class="mb-20 max-w-4xl mx-auto">
     <h3
-     class="text-2xl font-bold mb-4 border-b border-indigo-500 pb-3 dark:border-indigo-400"
+     class="text-4xl font-bold mb-8 border-b border-indigo-500 pb-6 dark:border-indigo-400"
     >
-     Visão Geral
+     Guia Rápido para Usuários
     </h3>
-    <p class="mb-5 leading-relaxed text-lg max-w-3xl mx-auto">
-     A <strong>ZIPPY</strong> é uma interface simples e eficiente para interação
-     com uma inteligência artificial, projetada para oferecer respostas rápidas
-     e precisas.
+    <p class="mb-8 leading-relaxed text-2xl">
+     Seja bem-vindo à ZIPPY! Aqui você encontrará tudo o que precisa para começar a usar a plataforma de forma simples e eficiente.
     </p>
-    <p class="mb-5 leading-relaxed text-lg max-w-3xl mx-auto">
-     Utilizando a API do Gemini, a ZIPPY integra funcionalidades avançadas,
-     incluindo pesquisa na web em tempo real, garantindo que as respostas estejam
-     sempre atualizadas e relevantes.
-    </p>
-    <p class="mb-5 leading-relaxed text-lg max-w-3xl mx-auto">
-     A interface é intuitiva, responsiva e acessível, facilitando a navegação e a
-     comunicação fluida entre o usuário e a IA.
-    </p>
-   </section>
-
-   <section class="mb-12">
-    <h3
-     class="text-2xl font-bold mb-4 border-b border-indigo-500 pb-3 dark:border-indigo-400"
-    >
-     Funcionalidades Principais
-    </h3>
-    <ul class="list-disc list-inside space-y-4 max-w-3xl mx-auto text-lg">
+    <ol class="list-decimal list-inside space-y-8 text-2xl">
      <li>
-      <strong>Pesquisa na Web em Tempo Real:</strong> Permite que a IA acesse
-      informações atualizadas diretamente da internet para fornecer respostas
-      mais precisas e relevantes.
+      <strong>Faça Login:</strong> Use seu email para acessar a ZIPPY. Se ainda não tem conta, será redirecionado para criar uma facilmente.
      </li>
      <li>
-      <strong>Resposta Rápida:</strong> A ZIPPY processa e responde às mensagens
-      com agilidade, proporcionando uma experiência fluida e eficiente.
+      <strong>Envie Mensagens:</strong> Digite sua pergunta ou comando na barra inferior e pressione <kbd>Enter</kbd> ou clique no botão de envio.
      </li>
      <li>
-      <strong>Facilidade de Movimentos:</strong> Interface simples e intuitiva,
-      com navegação fácil e controles acessíveis, garantindo conforto no uso
-      diário.
+      <strong>Ative a Pesquisa na Web:</strong> Clique no ícone de globo (<i class="fas fa-globe-americas"></i>) localizado na barra inferior, próximo ao campo de texto, para que a IA busque informações atualizadas na internet, garantindo respostas mais precisas.
      </li>
      <li>
-      <strong>Compreensão Avançada:</strong> A IA entende o contexto das mensagens,
-      permitindo conversas naturais e coerentes.
+      <strong>Crie Imagens:</strong> Digite <code>/imagem</code> seguido da descrição da imagem que deseja criar. Exemplo: <code>/imagem um cachorro brincando na praia</code>. Envie a mensagem para gerar a imagem.
      </li>
      <li>
-      <strong>Alternância de Tema:</strong> O usuário pode escolher entre tema
-      claro e escuro, com a preferência salva para futuras sessões.
+      <strong>Envie Imagens para Análise:</strong> Use o botão de imagem (<i class="fas fa-image"></i>) localizado na barra inferior, ao lado do botão de pesquisa na web, para selecionar uma foto do seu dispositivo. Após selecionar, digite uma pergunta relacionada à imagem, como "O que tem nesta foto?", e envie para receber a análise da IA.
      </li>
      <li>
-      <strong>Gerenciamento de Histórico:</strong> Histórico de conversas armazenado
-      localmente, com opção de limpeza pelo usuário.
+      <strong>Gerencie seu Histórico:</strong> Todas as conversas ficam salvas para você consultar depois. Pode limpar o histórico nas configurações quando quiser.
      </li>
      <li>
-      <strong>Notificações Intuitivas:</strong> Mensagens de alerta e confirmação
-      exibidas de forma clara e discreta.
-     </li>
-    </ul>
-   </section>
-
-   <section class="mb-12">
-    <h3
-     class="text-2xl font-bold mb-4 border-b border-indigo-500 pb-3 dark:border-indigo-400"
-    >
-     Como Usar
-    </h3>
-    <ol class="list-decimal list-inside space-y-4 max-w-3xl mx-auto text-lg">
-     <li>Faça login na aplicação.</li>
-     <li>
-      Digite sua mensagem no campo inferior e envie pressionando
-      <kbd
-       class="bg-gray-200 dark:bg-gray-700 rounded px-2 py-1 font-mono text-sm text-gray-800 dark:text-gray-200"
-       >Enter</kbd
-      >
-      ou clicando no botão de envio.
+      <strong>Personalize a Experiência:</strong> No menu de configurações, altere o tema, veja seu tipo de conta, limpe histórico ou desconecte-se.
      </li>
      <li>
-      Ative a pesquisa na web clicando no ícone do globo para obter respostas
-      com dados atualizados.
-     </li>
-     <li>Visualize as respostas da IA aparecerem com animação de digitação.</li>
-     <li>
-      Acesse as configurações para limpar histórico, alternar tema ou desconectar.
+      <strong>Receba Notificações:</strong> A ZIPPY informa sobre erros, confirmações e outras mensagens importantes para você.
      </li>
     </ol>
+    <p class="mt-12 leading-relaxed text-xl italic text-gray-600 dark:text-gray-400">
+     Explore, experimente e aproveite tudo o que a ZIPPY tem a oferecer para facilitar seu dia a dia!
+    </p>
    </section>
 
-   <section class="mb-12">
+   <!-- Seção para desenvolvedores -->
+   <section class="mb-20 max-w-4xl mx-auto">
     <h3
-     class="text-2xl font-bold mb-4 border-b border-indigo-500 pb-3 dark:border-indigo-400"
+     class="text-4xl font-bold mb-8 border-b border-indigo-500 pb-6 dark:border-indigo-400"
     >
-     Acessibilidade e Usabilidade
+     Guia Técnico para Desenvolvedores
     </h3>
-    <ul class="list-disc list-inside space-y-3 max-w-3xl mx-auto text-lg">
-     <li>Uso de roles ARIA para descrever regiões e estados.</li>
-     <li>Labels e descrições para botões e campos de entrada.</li>
-     <li>Gerenciamento de foco ao abrir e fechar modais.</li>
-     <li>Suporte a navegação por teclado e atalhos (ex: Enter para enviar).</li>
+    <p class="mb-8 leading-relaxed text-2xl">
+     Esta seção é destinada a desenvolvedores e colaboradores que desejam entender a arquitetura, funcionamento e integração da ZIPPY.
+    </p>
+
+    <h4 class="text-3xl font-semibold mb-4">Arquitetura Geral</h4>
+    <p class="mb-6 text-xl leading-relaxed">
+     A ZIPPY é uma aplicação web SPA (Single Page Application) construída com HTML, CSS (Tailwind CSS) e JavaScript puro. Ela se comunica com APIs externas para fornecer funcionalidades avançadas de chat, geração e análise de imagens.
+    </p>
+
+    <h4 class="text-3xl font-semibold mb-4">Componentes Principais</h4>
+    <ul class="list-disc list-inside space-y-4 text-xl mb-8">
+     <li>
+      <strong>Interface do Usuário:</strong> Estruturada em HTML sem frameworks JS, estilizada com Tailwind CSS para responsividade e temas claro/escuro.
+     </li>
+     <li>
+      <strong>Gerenciamento de Estado:</strong> Controlado via variáveis JS, manipulando estados como modo imagem, ativação da pesquisa na web, e controle de envio.
+     </li>
+     <li>
+      <strong>Armazenamento Local:</strong> Utiliza IndexedDB para persistência do histórico, com sincronização via API REST.
+     </li>
+     <li>
+      <strong>Comunicação com APIs:</strong> Integra com endpoints REST para chat, geração de imagens e análise (API Gemini).
+     </li>
+     <li>
+      <strong>Modais e Notificações:</strong> Implementados com manipulação direta do DOM, garantindo acessibilidade e controle de foco.
+     </li>
+     <li>
+      <strong>Barra de Entrada:</strong> Contém o campo de texto para mensagens, botão de ativar pesquisa na web (ícone de globo), botão para seleção de imagens (ícone de imagem) e botão de envio (ícone de avião de papel).
+     </li>
+    </ul>
+
+    <h4 class="text-3xl font-semibold mb-4">Fluxo de Uso</h4>
+    <ol class="list-decimal list-inside space-y-6 text-xl mb-8">
+     <li>
+      <strong>Login:</strong> Usuário é redirecionado para login se não autenticado, com detecção de dispositivo para direcionar para versão mobile ou desktop.
+     </li>
+     <li>
+      <strong>Carregamento do Histórico:</strong> Ao entrar, o app carrega mensagens do IndexedDB ou da API, exibindo-as no chat.
+     </li>
+     <li>
+      <strong>Envio de Mensagens:</strong> Usuário digita e envia mensagens, que são processadas localmente e enviadas para a API de chat.
+     </li>
+     <li>
+      <strong>Geração de Imagens:</strong> Comando <code>/imagem</code> dispara chamada à API de geração, exibindo a imagem retornada.
+     </li>
+     <li>
+      <strong>Análise de Imagens:</strong> Imagens enviadas são submetidas à API Gemini com perguntas, e respostas são exibidas.
+     </li>
+     <li>
+      <strong>Atualização do Histórico:</strong> Mensagens novas são salvas no IndexedDB e sincronizadas com o servidor.
+     </li>
+     <li>
+      <strong>Configurações:</strong> Permitem limpar histórico, alternar tema, desconectar e visualizar dados do usuário.
+     </li>
+    </ol>
+
+    <h4 class="text-3xl font-semibold mb-4">Detalhes da Barra de Entrada</h4>
+    <p class="mb-6 text-xl leading-relaxed">
+     A barra de entrada é o principal ponto de interação do usuário e contém os seguintes elementos:
+    </p>
+    <ul class="list-disc list-inside space-y-4 text-xl mb-8">
+     <li>
+      <strong>Campo de Texto:</strong> Área para digitar mensagens, comandos ou perguntas. Suporta múltiplas linhas e redimensionamento automático.
+     </li>
+     <li>
+      <strong>Botão de Pesquisa na Web:</strong> Ícone de globo (<i class="fas fa-globe-americas"></i>) que ativa ou desativa a pesquisa na web para respostas atualizadas.
+     </li>
+     <li>
+      <strong>Botão de Seleção de Imagem:</strong> Ícone de imagem (<i class="fas fa-image"></i>) que abre o seletor de arquivos para envio de imagens para análise.
+     </li>
+     <li>
+      <strong>Indicador de Imagem Selecionada:</strong> Pequeno ponto verde que aparece sobre o botão de imagem quando uma imagem está selecionada.
+     </li>
+     <li>
+      <strong>Botão de Envio:</strong> Ícone de avião de papel (<i class="fas fa-paper-plane"></i>) que envia a mensagem ou imagem com pergunta.
+     </li>
+    </ul>
+
+    <h4 class="text-3xl font-semibold mb-4">Acessibilidade e Usabilidade</h4>
+    <p class="mb-6 text-xl leading-relaxed">
+     O código segue boas práticas de acessibilidade, incluindo:
+    </p>
+    <ul class="list-disc list-inside space-y-4 text-xl mb-8">
+     <li>Uso de roles ARIA para regiões e alertas.</li>
+     <li>Labels e descrições para botões e inputs.</li>
+     <li>Gerenciamento de foco em modais e notificações.</li>
+     <li>Suporte a navegação por teclado e atalhos.</li>
      <li>Contraste adequado para temas claro e escuro.</li>
     </ul>
-   </section>
 
-   <section class="mb-12 max-w-3xl mx-auto text-lg text-center">
-    <h3
-     class="text-2xl font-bold mb-4 border-b border-indigo-500 pb-3 dark:border-indigo-400"
-    >
-     Suporte
-    </h3>
-    <p class="leading-relaxed mb-3">
-     Para dúvidas, problemas ou sugestões, entre em contato com o suporte pelo
-     email:
+    <h4 class="text-3xl font-semibold mb-4">Considerações Técnicas</h4>
+    <ul class="list-disc list-inside space-y-4 text-xl mb-8">
+     <li>
+      <strong>IndexedDB:</strong> Usado para armazenar mensagens localmente, com transações para leitura e escrita, e índice por usuário.
+     </li>
+     <li>
+      <strong>Retry Fetch:</strong> Função utilitária para tentativas automáticas em chamadas API, melhorando robustez.
+     </li>
+     <li>
+      <strong>Renderização KaTeX:</strong> Aplicada dinamicamente para fórmulas matemáticas nas mensagens.
+     </li>
+     <li>
+      <strong>Manipulação DOM:</strong> Criação e atualização de elementos para mensagens, imagens, modais e notificações.
+     </li>
+     <li>
+      <strong>Eventos:</strong> Listeners para botões, inputs, teclado e mudanças de estado.
+     </li>
+     <li>
+      <strong>Estilos:</strong> Tailwind CSS com customizações para responsividade, temas e animações.
+     </li>
+    </ul>
+
+    <h4 class="text-3xl font-semibold mb-4">Créditos e Responsabilidades</h4>
+    <p class="mb-6 text-xl leading-relaxed">
+     A API Gemini é responsável pelo processamento das perguntas, geração de respostas e imagens. Eventuais erros ou imprecisões são de responsabilidade da API Gemini. A ZIPPY atua como interface para facilitar a comunicação entre o usuário e a API.
+    </p>
+
+    <h4 class="text-3xl font-semibold mb-4">Contato para Desenvolvedores</h4>
+    <p class="mb-6 text-xl leading-relaxed">
+     Para contribuir, reportar bugs ou sugerir melhorias, entre em contato:
     </p>
     <a
-     class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline break-words"
+     class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline break-words text-xl"
      href="mailto:support@zippy.icu"
      >support@zippy.icu</a
     >
    </section>
 
-   <section
-    class="mb-10 text-center text-sm text-gray-500 dark:text-gray-400 select-none"
-   >
-    <p>Desenvolvido por Ângelo Silva</p>
-    <p>© 2025 Todos os direitos reservados.</p>
+   <section class="mb-10 max-w-4xl mx-auto text-lg text-center">
+    <h3
+     class="text-3xl font-bold mb-6 border-b border-indigo-500 pb-4 dark:border-indigo-400"
+    >
+     Sobre o Desenvolvedor
+    </h3>
+    <p class="leading-relaxed mb-4 text-xl max-w-3xl mx-auto">
+     A ZIPPY foi criada e é mantida por:
+    </p>
+    <p class="text-xl font-semibold">Ângelo Silva Santos de Souza</p>
+    <p class="mt-6 text-gray-600 dark:text-gray-400 select-none">
+     © 2025 Todos os direitos reservados.
+    </p>
    </section>
   </main>
-  <footer class="bg-gray-100 dark:bg-gray-800 text-center py-4 text-gray-600 dark:text-gray-400 select-none"></footer>
+  <footer class="bg-gray-100 dark:bg-gray-800 text-center py-6 text-gray-600 dark:text-gray-400 select-none"></footer>
   <script>
    document.getElementById("backBtn").addEventListener("click", () => {
     window.location.replace("https://zippy.icu");
