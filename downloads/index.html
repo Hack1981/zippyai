@@ -1,0 +1,177 @@
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   ZIPPY - Download APKs
+  </title>
+  <link href="/imagem/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="/imagem/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+  <link href="/imagem/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+  <link href="/imagem/site.webmanifest" rel="manifest"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fadeInUp {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .fadeInUpDelay1 {
+      animation-delay: 0.2s;
+    }
+    .fadeInUpDelay2 {
+      animation-delay: 0.4s;
+    }
+    .fadeInUpDelay3 {
+      animation-delay: 0.6s;
+    }
+  </style>
+ </head>
+ <body class="antialiased flex flex-col min-h-screen" id="body">
+  <header class="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-md z-50 shadow-lg">
+   <nav class="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between h-16">
+    <a class="text-3xl font-extrabold text-indigo-500 tracking-wide select-none" href="https://zippy.icu" tabindex="-1" aria-hidden="true">
+     ZIPPY
+    </a>
+   </nav>
+  </header>
+  <main class="pt-24 max-w-4xl mx-auto px-6 sm:px-12 flex-grow">
+   <section class="text-center fadeInUp">
+    <h1 class="text-5xl sm:text-6xl font-extrabold text-indigo-500 mb-6 leading-tight tracking-wide">
+     Baixe os APKs do ZIPPY
+    </h1>
+    <p class="text-gray-400 max-w-3xl mx-auto text-lg sm:text-xl leading-relaxed mb-12">
+     Aqui você pode baixar dois modelos diferentes de inteligência artificial para seu dispositivo Android. O
+     <span class="text-indigo-400 font-semibold">
+      Zippy
+     </span>
+     é um modelo multimodal que entende texto e imagens, perfeito para bater um papo sobre os mais variados temas. Já o
+     <span class="text-indigo-400 font-semibold">
+      ZippyLabs
+     </span>
+     é focado em aprendizado, usando flash cards temáticos para ajudar você a aprofundar seus conhecimentos de forma prática e eficiente.
+    </p>
+   </section>
+   <section class="grid grid-cols-1 sm:grid-cols-2 gap-10 fadeInUp fadeInUpDelay1" id="download-section">
+    <article class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col">
+     <img alt="Imagem ilustrativa do modelo de inteligência artificial multimodal Zippy, mostrando uma interface futurista com elementos de fala e texto em um fundo escuro com tons roxos" class="rounded-lg mb-6 object-cover w-full h-48 sm:h-56" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/add30141-7963-45d0-d845-fb6a6c3979e7.jpg" width="600"/>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      Zippy - Modelo Multimodal
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed mb-6">
+      O Zippy entende texto e imagens para oferecer respostas claras e úteis sobre qualquer assunto. É uma ferramenta versátil que ajuda você a explorar ideias, tirar dúvidas e criar conteúdos de forma simples e natural.
+     </p>
+     <a aria-label="Baixar APK do Zippy" class="inline-flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400" download="" href="version/zippy.apk">
+      <i class="fas fa-download">
+      </i>
+      Baixar Zippy.apk
+     </a>
+    </article>
+    <article class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300 flex flex-col">
+     <img alt="Imagem ilustrativa do modelo de inteligência artificial ZippyLabs, mostrando flash cards digitais com temas variados em um fundo escuro com tons roxos e lilás" class="rounded-lg mb-6 object-cover w-full h-48 sm:h-56" height="300" loading="lazy" src="https://storage.googleapis.com/a1aa/image/8fba3365-a614-40e2-2060-31d582173706.jpg" width="600"/>
+     <h2 class="text-2xl font-semibold text-indigo-400 mb-3">
+      ZippyLabs - Flash Cards Temáticos
+     </h2>
+     <p class="text-gray-300 flex-grow leading-relaxed mb-6">
+      O ZippyLabs organiza o conhecimento em flash cards temáticos, facilitando o aprendizado e a revisão de conteúdos. É ideal para quem quer estudar de forma prática, com uma IA que gera conteúdos focados e relevantes para cada tema.
+     </p>
+     <a aria-label="Baixar APK do ZippyLabs" class="inline-flex items-center justify-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400" download="" href="version/ZippyLabs.apk">
+      <i class="fas fa-download">
+      </i>
+      Baixar ZippyLabs.apk
+     </a>
+    </article>
+   </section>
+   <section class="mt-16 fadeInUp fadeInUpDelay2">
+    <h3 class="text-indigo-400 text-3xl font-semibold mb-6 text-center">
+     Mais sobre os Modelos
+    </h3>
+    <div class="space-y-10">
+     <div class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300">
+      <h4 class="text-xl font-semibold text-indigo-400 mb-3">
+       Zippy - Modelo Multimodal
+      </h4>
+      <p class="text-gray-300 leading-relaxed mb-4">
+       O Zippy é um modelo inteligente que entende texto e imagens para ajudar você a explorar ideias, responder perguntas e criar conteúdos interessantes. Ele é simples de usar e traz respostas claras, tornando sua experiência mais agradável e produtiva.
+      </p>
+      <ul class="list-disc list-inside text-gray-400 space-y-1">
+       <li>
+        Compreensão de texto e imagens
+       </li>
+       <li>
+        Respostas claras e úteis para diversos temas
+       </li>
+       <li>
+        Interface amigável e fácil de usar
+       </li>
+       <li>
+        Suporte para múltiplos idiomas
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-indigo-600 transition-shadow duration-300">
+      <h4 class="text-xl font-semibold text-indigo-400 mb-3">
+       ZippyLabs - Flash Cards Temáticos
+      </h4>
+      <p class="text-gray-300 leading-relaxed mb-4">
+       O ZippyLabs ajuda você a aprender de forma prática, organizando o conteúdo em flash cards temáticos. Ele gera textos focados para cada assunto, facilitando o estudo e a revisão, perfeito para quem quer aprofundar o conhecimento com uma ferramenta inteligente.
+      </p>
+      <ul class="list-disc list-inside text-gray-400 space-y-1">
+       <li>
+        Conteúdo organizado em flash cards
+       </li>
+       <li>
+        Geração de textos focados e relevantes
+       </li>
+       <li>
+        Ideal para estudo e revisão eficiente
+       </li>
+       <li>
+        Capacidade generativa avançada para cada tema
+       </li>
+      </ul>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer class="mt-20 py-8 bg-gray-900 text-gray-400 text-center text-sm select-none">
+   © 2025 ZIPPY. Todos os direitos reservados.
+  </footer>
+  <script>
+   // Mobile menu toggle
+    const btnMenu = document.getElementById("btn-menu");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    btnMenu.addEventListener("click", () => {
+      if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== "0px") {
+        mobileMenu.style.maxHeight = "0px";
+      } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      }
+    });
+  </script>
+ </body>
+</html>
