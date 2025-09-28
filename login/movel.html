@@ -213,6 +213,13 @@
         >
           Entrar
         </button>
+        <button
+  id="googleLoginBtn"
+  type="button"
+  class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg bg-red-500 hover:bg-red-600 flex items-center justify-center gap-3"
+>
+  <i class="fab fa-google"></i> Entrar com Google
+</button>
       </form>
     </section>
 
@@ -300,6 +307,41 @@
   <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
   <script>
+    // Botão login Google
+const googleLoginBtn = document.getElementById("googleLoginBtn");
+
+googleLoginBtn.addEventListener("click", () => {
+  // Redireciona para o endpoint Google OAuth
+  window.location.href = `${baseUrl}login/google`;
+});
+
+// Checa se veio código do Google na URL e faz login automático
+window.addEventListener("load", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
+
+  if (code) {
+    try {
+      const response = await fetch(`${baseUrl}auth/callback?code=${code}`);
+      const data = await response.json();
+
+      if (response.ok && data.user) {
+        // Armazena usuário no localStorage (igual login com senha)
+        localStorage.setItem("user", JSON.stringify(data.user));
+        console.log("Dados do login Google:", data.user);
+        showMessage("Login via Google bem-sucedido!", "success");
+        redirectToZylo(); // Redireciona para o chat ou página principal
+      } else {
+        showMessage("Erro ao autenticar via Google.", "error");
+        console.error("Erro no login Google:", data);
+      }
+    } catch (error) {
+      showMessage("Erro inesperado no login Google.", "error");
+      console.error("Erro no login Google:", error);
+    }
+  }
+});
+
     const baseURL =
       "https://api-criar-conta-git-main-hack1981s-projects.vercel.app";
 
