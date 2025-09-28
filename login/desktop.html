@@ -705,6 +705,31 @@
       rightDescription.style.transform = 'translateX(0)';
       clearAllInputs();
     });
+
+    window.addEventListener('load', () => {
+  // Pega dados do Google se vieram na URL
+  const params = new URLSearchParams(window.location.search);
+  const googleUser = params.get("email") ? {
+    id: params.get("id"),
+    email: params.get("email"),
+    tipo_da_conta: params.get("tipo_da_conta"),
+    inicio_ass: params.get("inicio_ass"),
+    final_ass: params.get("final_ass"),
+  } : null;
+
+  if (googleUser) {
+    localStorage.setItem("user", JSON.stringify(googleUser));
+    showMessage("Login via Google bem-sucedido!", "success");
+    // Redireciona para a página principal
+    window.location.href = "https://zippy.icu/chat";
+  }
+
+  // Mostra erro caso o login falhe
+  if (params.get("error")) {
+    showMessage("Falha ao fazer login com Google.", "error");
+  }
+});
+
   </script>
 </body>
 </html>
