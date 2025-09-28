@@ -518,16 +518,9 @@
     setupPasswordToggle("toggleLoginPassword", "loginPassword");
     setupPasswordToggle("toggleRegisterPassword", "registerPassword");
 
-    // URL do backend que inicia o login via Google
-    const googleAuthURL = `${baseURL}/auth/google`;
-
-// Botão Google
-    const googleLoginButton = document.getElementById("googleLoginButton");
-
-    googleLoginButton.addEventListener("click", () => {
-  // Abre a rota de login do Google
-    window.location.href = googleAuthURL;
-    });
+     document.getElementById("googleLogin").addEventListener("click", () => {
+    // Redireciona direto para a rota do backend que inicia o OAuth
+    window.location.href = "https://api-criar-conta.vercel.app/auth/google";
 
     function getQueryParams() {
         const params = {};
