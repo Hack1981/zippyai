@@ -310,12 +310,10 @@
   <script>
 
     
-    const baseURL =
-      "https://api-criar-conta-git-main-hack1981s-projects.vercel.app
-      
-  googleLoginBtn.addEventListener("click", () => {
-    window.location.href = "https://api-criar-conta.vercel.app/login/google";
-  });
+    const baseUrl = "https://api-criar-conta.vercel.app/"; // ou seu backend
+    googleLoginBtn.addEventListener("click", () => {
+      window.location.href = `${baseUrl}login/google`;
+    });
 
 
 
