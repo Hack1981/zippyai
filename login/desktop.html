@@ -707,29 +707,39 @@
       clearAllInputs();
     });
 
-    window.addEventListener('load', () => {
-  // Pega dados do Google se vieram na URL
-  const params = new URLSearchParams(window.location.search);
-  const googleUser = params.get("email") ? {
-    id: params.get("id"),
-    email: params.get("email"),
-    tipo_da_conta: params.get("tipo_da_conta"),
-    inicio_ass: params.get("inicio_ass"),
-    final_ass: params.get("final_ass"),
-  } : null;
-
-  if (googleUser) {
-    localStorage.setItem("user", JSON.stringify(googleUser));
-    showMessage("Login via Google bem-sucedido!", "success");
-    // Redireciona para a página principal
-    window.location.href = "https://zippy.icu/chat";
+    function getQueryParams() {
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const pairs = queryString.split("&");
+    for (let pair of pairs) {
+      if (!pair) continue;
+      const [key, value] = pair.split("=");
+      params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+    }
+    return params;
   }
 
-  // Mostra erro caso o login falhe
-  if (params.get("error")) {
-    showMessage("Falha ao fazer login com Google.", "error");
+  // Checa se chegou dados do Google
+  const googleData = getQueryParams();
+
+  if (googleData.id && googleData.email) {
+    // Salva os dados no localStorage
+    localStorage.setItem("user", JSON.stringify({
+      id: googleData.id,
+      email: googleData.email,
+      tipo_da_conta: googleData.tipo_da_conta,
+      inicio_ass: googleData.inicio_ass,
+      final_ass: googleData.final_ass
+    }));
+
+    // Redireciona para a página principal ou dashboard
+    window.location.href = "/"; // ou "/chat" dependendo do seu fluxo
   }
-});
+
+  // Checa se veio mensagem de erro
+  if (googleData.error) {
+    alert("Erro ao fazer login: " + googleData.error);
+  }
 
   </script>
 </body>
