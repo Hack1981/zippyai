@@ -257,6 +257,13 @@
         >
           Entrar
         </button>
+        <button
+         id="googleLoginBtn"
+         type="button"
+         class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg bg-red-500 hover:bg-red-600 flex items-center justify-center gap-3"
+        >
+        <i class="fab fa-google"></i> Entrar com Google
+        </button>
       </form>
     </div>
 
@@ -367,6 +374,37 @@
   <div id="messageContainer" aria-live="polite" aria-atomic="true"></div>
 
   <script>
+
+    const googleLoginBtn = document.getElementById("googleLoginBtn");
+
+    googleLoginBtn.addEventListener("click", () => {
+         window.location.href = `${baseUrl}login/google`;
+    });
+
+    window.addEventListener("load", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get("code");
+    if (code) {
+        try {
+            const response = await fetch(`${baseUrl}auth/callback?code=${code}`);
+            const data = await response.json();
+
+            if (response.ok && data.user) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+                console.log("Dados do login Google:", data.user);
+                showMessage("Login via Google bem-sucedido!", "success");
+                redirectToZylo(); // Redireciona para o chat ou página principal
+                } else {
+                    showMessage("Erro ao autenticar via Google.", "error");
+                    console.error("Erro no login Google:", data);
+                    }
+                } catch (error) {
+                    showMessage("Erro inesperado no login Google.", "error");
+                    console.error("Erro no login Google:", error);
+                    }
+                }
+            });
+
     const baseUrl = "https://api-criar-conta.vercel.app/";
 
     // Show message on site
