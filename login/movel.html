@@ -205,17 +205,6 @@
           </div>
         </div>
 
-        <div class="flex justify-center mb-4">
-            <button
-                id="googleLoginButton"
-                type="button"
-                class="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 transition rounded-lg py-3 text-white font-semibold text-lg shadow-md"
-            >
-            <i class="fab fa-google"></i> Entrar com Google
-            </button>
-        </div>
-
-
         <button
           id="loginButton"
           type="submit"
@@ -224,6 +213,14 @@
         >
           Entrar
         </button>
+        <button
+            id="googleLoginBtn"
+            type="button"
+            class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg bg-red-500 hover:bg-red-600 flex items-center justify-center gap-3"
+        >
+            <i class="fab fa-google"></i> Entrar com Google
+        </button>
+
       </form>
     </section>
 
@@ -311,8 +308,11 @@
   <div id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
 
   <script>
-    const baseURL =
-      "https://api-criar-conta.vercel.app/";
+    const baseUrl = "https://api-criar-conta.vercel.app/"; // ou seu backend
+    googleLoginBtn.addEventListener("click", () => {
+        window.location.href = `${baseUrl}login/google`;
+    });
+
 
     function isValidEmail(email) {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -517,35 +517,34 @@
     }
     setupPasswordToggle("toggleLoginPassword", "loginPassword");
     setupPasswordToggle("toggleRegisterPassword", "registerPassword");
-
-     document.getElementById("googleLogin").addEventListener("click", () => {
-    // Redireciona direto para a rota do backend que inicia o OAuth
-    window.location.href = "https://api-criar-conta.vercel.app/auth/google";
-
     function getQueryParams() {
-        const params = {};
-        const queryString = window.location.search.substring(1);
-        const pairs = queryString.split("&");
-        for (let pair of pairs) {
-            if (!pair) continue;
-                const [key, value] = pair.split("=");
-                params[decodeURIComponent(key)] = decodeURIComponent(value || "");
-        }
-        return params;
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const pairs = queryString.split("&");
+    for (let pair of pairs) {
+      if (!pair) continue;
+      const [key, value] = pair.split("=");
+      params[decodeURIComponent(key)] = decodeURIComponent(value || "");
     }
+    return params;
+  }
 
-// Checa se chegou dados do Google
-    window.addEventListener("load", () => {
-        const googleData = getQueryParams();
-            if (googleData.id && googleData.email) {
-    // Salva no localStorage igual ao login normal
-            localStorage.setItem("user", JSON.stringify(googleData));
+  const googleData = getQueryParams();
 
-    // Redireciona para o chat ou dashboard
-        window.location.href = "https://zippy.icu/chat";
-        }
-    });
+  if (googleData.id && googleData.email) {
+    localStorage.setItem("user", JSON.stringify({
+      id: googleData.id,
+      email: googleData.email,
+      tipo_da_conta: googleData.tipo_da_conta,
+      inicio_ass: googleData.inicio_ass,
+      final_ass: googleData.final_ass
+    }));
+    window.location.href = "/chat"; // página após login
+  }
 
+  if (googleData.error) {
+    alert("Erro ao fazer login: " + googleData.error);
+  }
   </script>
 </body>
 </html>
