@@ -205,6 +205,17 @@
           </div>
         </div>
 
+        <div class="flex justify-center mb-4">
+            <button
+                id="googleLoginButton"
+                type="button"
+                class="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 transition rounded-lg py-3 text-white font-semibold text-lg shadow-md"
+            >
+            <i class="fab fa-google"></i> Entrar com Google
+            </button>
+        </div>
+
+
         <button
           id="loginButton"
           type="submit"
@@ -301,7 +312,7 @@
 
   <script>
     const baseURL =
-      "https://api-criar-conta-git-main-hack1981s-projects.vercel.app";
+      "https://api-criar-conta.vercel.app/";
 
     function isValidEmail(email) {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -506,6 +517,42 @@
     }
     setupPasswordToggle("toggleLoginPassword", "loginPassword");
     setupPasswordToggle("toggleRegisterPassword", "registerPassword");
+
+    // URL do backend que inicia o login via Google
+    const googleAuthURL = `${baseURL}/auth/google`;
+
+// Botão Google
+    const googleLoginButton = document.getElementById("googleLoginButton");
+
+    googleLoginButton.addEventListener("click", () => {
+  // Abre a rota de login do Google
+    window.location.href = googleAuthURL;
+    });
+
+    function getQueryParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const pairs = queryString.split("&");
+        for (let pair of pairs) {
+            if (!pair) continue;
+                const [key, value] = pair.split("=");
+                params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+        }
+        return params;
+    }
+
+// Checa se chegou dados do Google
+    window.addEventListener("load", () => {
+        const googleData = getQueryParams();
+            if (googleData.id && googleData.email) {
+    // Salva no localStorage igual ao login normal
+            localStorage.setItem("user", JSON.stringify(googleData));
+
+    // Redireciona para o chat ou dashboard
+        window.location.href = "https://zippy.icu/chat";
+        }
+    });
+
   </script>
 </body>
 </html>
