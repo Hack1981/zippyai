@@ -212,6 +212,13 @@
         >
           Entrar
         </button>
+        <button
+          id="googleLoginBtn"
+          type="button"
+          class="w-full py-3 sm:py-4 rounded-3xl font-semibold text-lg text-white shadow-lg bg-red-500 hover:bg-red-600 flex items-center justify-center gap-3"
+        >
+          <i class="fab fa-google"></i> Entrar com Google
+        </button>
       </form>
     </section>
 
@@ -301,6 +308,10 @@
   <script>
     const baseURL =
       "https://api-criar-conta-git-main-hack1981s-projects.vercel.app";
+
+    googleLoginBtn.addEventListener("click", () => {
+      window.location.href = "https://api-criar-conta.vercel.app/login/google";
+    });
 
     function isValidEmail(email) {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -505,6 +516,38 @@
     }
     setupPasswordToggle("toggleLoginPassword", "loginPassword");
     setupPasswordToggle("toggleRegisterPassword", "registerPassword");
+
+
+      function getQueryParams() {
+    const params = {};
+    const queryString = window.location.search.substring(1);
+    const pairs = queryString.split("&");
+    for (let pair of pairs) {
+      if (!pair) continue;
+      const [key, value] = pair.split("=");
+      params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+    }
+    return params;
+  }
+
+  const googleData = getQueryParams();
+
+  if (googleData.id && googleData.email) {
+    localStorage.setItem("user", JSON.stringify({
+      id: googleData.id,
+      email: googleData.email,
+      tipo_da_conta: googleData.tipo_da_conta,
+      inicio_ass: googleData.inicio_ass,
+      final_ass: googleData.final_ass
+    }));
+    window.location.href = "/chat"; // página após login
+  }
+
+  if (googleData.error) {
+    alert("Erro ao fazer login: " + googleData.error);
+  }
+
+    
   </script>
 </body>
 </html>
