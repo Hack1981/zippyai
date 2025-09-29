@@ -343,19 +343,22 @@
         });
 
         const data = await response.json();
-        if (response.ok) {
-          showMessage("Conta criada com sucesso!", "success");
-          if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
+        if (!response.ok) {
+          if (data.detail && data.detail.toLowerCase().includes("already")) {
+            showToast("Email já registrado.");
+            return;
           }
-          return data;
-        } else {
-          showMessage("Erro ao criar conta: " + (data.detail || JSON.stringify(data)), "error");
-          return null;
+          throw new Error(data.detail || "Dados errados.");
         }
+
+        showToast("Usuário registrado com sucesso!");
+        console.log(data);
       } catch (error) {
-        showMessage("Erro inesperado ao criar conta.", "error");
-        return null;
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
       }
     }
 
@@ -370,20 +373,27 @@
         });
 
         const data = await response.json();
-        if (response.ok) {
-          showMessage("Login bem-sucedido!", "success");
-          if (data.user) {
-            localStorage.setItem("user", JSON.stringify(data.user));
-          }
-          redirectToZylo();
-          return data;
-        } else {
-          showMessage("Erro ao fazer login: " + (data.detail || JSON.stringify(data)), "error");
-          return null;
+        if (!response.ok) {
+          throw new Error("Dados errados.");
         }
+
+        const userData = {
+          id: data.user.id,
+          email: data.user.email,
+        };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        showToast("Login realizado com sucesso!");
+        console.log("Usuário salvo no localStorage:", userData);
+
+        redirectToZylo();
       } catch (error) {
-        showMessage("Erro inesperado no login.", "error");
-        return null;
+        showToast(
+          error.message === "Dados errados."
+            ? "Dados errados."
+            : `Erro: ${error.message}`
+        );
       }
     }
 
