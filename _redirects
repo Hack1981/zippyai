@@ -1,7 +1,7 @@
-/chat    /zippy.html    200
-/docs    /docs/docs.html    200
-/loginv1           /login/movel.html    200
-/loginv2           /login/desktop.html  200
-/planos           /assinatura.html  200
-/downloads           /downloads.html  200
-
+/chat       /zippy.html          200
+/docs       /docs/docs.html      200
+/loginv1    /login/movel.html    200
+/loginv2    /login/desktop.html  200
+/planos     /assinatura.html     200
+/downloads  /downloads.html      200
+/*          /notas.html          200
